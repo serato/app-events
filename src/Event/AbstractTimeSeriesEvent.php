@@ -29,7 +29,7 @@ use Serato\AppEvents\EventTarget\AbstractEventTarget;
  */
 abstract class AbstractTimeSeriesEvent extends AbstractEventData
 {
-    protected const ROOT_ATTR = 'serato_event';
+    protected const ROOT_ATTR = 'serato';
 
     public const SUCCESS = 'success';
     public const FAILURE = 'failure';
@@ -219,5 +219,10 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventData
     public function setEventProvider(string $provider): self
     {
         return $this->setData('event.provider', $provider);
+    }
+
+    protected function getEventDataRootAttribute(): string
+    {
+        return $this->getEventDataRootAttribute() . '.' . $this->getName();
     }
 }

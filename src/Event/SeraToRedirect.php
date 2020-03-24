@@ -11,11 +11,11 @@ namespace Serato\AppEvents\Event;
  *
  * Sets the following fields:
  *
- * `<ROOT ATTR>.id`
- * `<ROOT ATTR>.name`
- * `<ROOT ATTR>.group`
- * `<ROOT ATTR>.short_url`
- * `<ROOT ATTR>.destination_url`
+ * `<ROOT ATTR>.sera_to_redirect.id`
+ * `<ROOT ATTR>.sera_to_redirect.name`
+ * `<ROOT ATTR>.sera_to_redirect.group`
+ * `<ROOT ATTR>.sera_to_redirect.short_url`
+ * `<ROOT ATTR>.sera_to_redirect.destination_url`
  */
 class SeraToRedirect extends AbstractTimeSeriesEvent
 {
@@ -32,14 +32,14 @@ class SeraToRedirect extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.id`
+     * `<ROOT ATTR>.sera_to_redirect.id`
      *
      * @param string $id
      * @return self
      */
     public function setRedirectId(string $id): self
     {
-        return $this->setData(self::ROOT_ATTR . '.id', $id);
+        return $this->setData($this->getEventDataRootAttribute() . '.id', $id);
     }
 
     /**
@@ -47,14 +47,14 @@ class SeraToRedirect extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.name`
+     * `<ROOT ATTR>.sera_to_redirect.name`
      *
      * @param string $name
      * @return self
      */
     public function setRedirectName(string $name): self
     {
-        return $this->setData(self::ROOT_ATTR . '.name', $name);
+        return $this->setData($this->getEventDataRootAttribute() . '.name', $name);
     }
 
     /**
@@ -62,14 +62,14 @@ class SeraToRedirect extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.group`
+     * `<ROOT ATTR>.sera_to_redirect.group`
      *
      * @param string $group
      * @return self
      */
     public function setRedirectGroup(string $group): self
     {
-        return $this->setData(self::ROOT_ATTR . '.group', $group);
+        return $this->setData($this->getEventDataRootAttribute() . '.group', $group);
     }
 
     /**
@@ -77,14 +77,14 @@ class SeraToRedirect extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.short_url`
+     * `<ROOT ATTR>.sera_to_redirect.short_url`
      *
      * @param string $url
      * @return self
      */
     public function setRedirectShortUrl(string $url): self
     {
-        return $this->setData(self::ROOT_ATTR . '.short_url', $url);
+        return $this->setData($this->getEventDataRootAttribute() . '.short_url', $url);
     }
 
 
@@ -93,13 +93,13 @@ class SeraToRedirect extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.destination_url`
+     * `<ROOT ATTR>.sera_to_redirect.destination_url`
      *
      * @param string $url
      * @return self
      */
     public function setRedirectDestinationUrl(string $url): self
     {
-        return $this->setData(self::ROOT_ATTR . '.destination_url', $url);
+        return $this->setData($this->getEventDataRootAttribute() . '.destination_url', $url);
     }
 }
