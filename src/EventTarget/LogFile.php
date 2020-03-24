@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Serato\AppEvents\LogTarget;
+namespace Serato\AppEvents\EventTarget;
 
-use Serato\AppEvents\Event\LoggableEventInterface;
+use Serato\AppEvents\Event\SendableEventInterface;
 use Psr\Log\LoggerInterface;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Formatter\JsonFormatter;
 
-class LogFile extends AbstractLogTarget
+class LogFile extends AbstractEventTarget
 {
     /** @var LoggerInterface */
     private $logger;
@@ -26,14 +26,14 @@ class LogFile extends AbstractLogTarget
 
         $stream = new StreamHandler($logFilePath, Logger::INFO);
         $stream->setFormatter(new JsonFormatter);
-        $this->logger = new Logger('serato_eventlog');
+        $this->logger = new Logger('serato_app_events');
         $this->logger->pushHandler($stream);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function log(LoggableEventInterface $event): void
+    protected function send(SendableEventInterface $event): void
     {
         $this->logger->info($event->getName(), $event->get());
     }

@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Serato\AppEvents\LogTarget;
+namespace Serato\AppEvents\EventTarget;
 
-use Serato\AppEvents\Event\LoggableEventInterface;
+use Serato\AppEvents\Event\SendableEventInterface;
 
-abstract class AbstractLogTarget
+abstract class AbstractEventTarget
 {
     /** @var string */
     private $appName;
@@ -28,25 +28,25 @@ abstract class AbstractLogTarget
     /**
      * Logs the event
      *
-     * @param LoggableEventInterface $event
+     * @param SendableEventInterface $event
      * @return void
      */
-    public function logEvent(LoggableEventInterface $event): void
+    public function sendEvent(SendableEventInterface $event): void
     {
         $event
             ->setAppName($this->getAppName())
             ->setEnvironment($this->getEnvironment());
         
-        $this->log($event);
+        $this->send($event);
     }
 
     /**
      * Implements event logging
      *
-     * @param LoggableEventInterface $event
+     * @param SendableEventInterface $event
      * @return void
      */
-    abstract protected function log(LoggableEventInterface $event): void;
+    abstract protected function send(SendableEventInterface $event): void;
 
     /**
      * Returns the application name

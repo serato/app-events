@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Serato\AppEvents\Event;
 
 /**
- * Interface for events that can be logged
+ * Interface for events that can be sent to an event target
  */
-interface LoggableEventInterface
+interface SendableEventInterface
 {
     /**
      * Returns the name of the event

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Serato\AppEvents\Event;
 
 use DateTime;
-use Serato\AppEvents\LogTarget\AbstractLogTarget;
+use Serato\AppEvents\EventTarget\AbstractEventTarget;
 
 /**
  * ** AbstractTimeSeriesEvent **
@@ -43,12 +43,12 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventData
     /**
      * Logs the event to the specified log target
      *
-     * @param AbstractLogTarget $logger
+     * @param AbstractEventTarget $logger
      * @return void
      */
-    public function log(AbstractLogTarget $logger): void
+    public function send(AbstractEventTarget $target): void
     {
-        $logger->logEvent($this);
+        $target->sendEvent($this);
     }
 
     /**

@@ -13,7 +13,7 @@ use Serato\AppEvents\Exception\InvalidDataValueException;
  * Includes helper functions for converting disprate source data
  * into common values
  */
-abstract class AbstractEventData implements LoggableEventInterface
+abstract class AbstractEventData implements SendableEventInterface
 {
     public const LICENSE_TERM_PERMANENT = 'permanent';
     public const LICENSE_TERM_SUBSCRIPTION = 'subscription';
