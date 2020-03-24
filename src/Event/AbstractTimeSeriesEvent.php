@@ -29,6 +29,8 @@ use Serato\AppEvents\LogTarget\AbstractLogTarget;
  */
 abstract class AbstractTimeSeriesEvent extends AbstractEventData
 {
+    protected const ROOT_ATTR = 'serato_event';
+
     public const SUCCESS = 'success';
     public const FAILURE = 'failure';
     public const INCOMPLETE = 'incomplete';

@@ -16,37 +16,37 @@ use Exception;
  *
  * Sets the following fields:
  *
- * `resource.id`
- * `resource.interactive`
- * `resource.cart_id`
- * `resource.user.id`
- * `resource.user.email_address`
- * `resource.user.first_name`
- * `resource.user.last_name`
- * `resource.user.billing_address.address_1`
- * `resource.user.billing_address.address_2`
- * `resource.user.billing_address.city`
- * `resource.user.billing_address.state`
- * `resource.user.billing_address.postcode`
- * `resource.user.billing_address.country_code`
- * `resource.tax_rate`
- * `resource.payment.provider`
- * `resource.payment.transaction_reference`
- * `resource.payment.payment_instrument.type`
- * `resource.payment.payment_instrument.name`
- * `resource.payment.payment_instrument.transaction_reference`
+ * `<ROOT ATTR>.id`
+ * `<ROOT ATTR>.interactive`
+ * `<ROOT ATTR>.cart_id`
+ * `<ROOT ATTR>.user.id`
+ * `<ROOT ATTR>.user.email_address`
+ * `<ROOT ATTR>.user.first_name`
+ * `<ROOT ATTR>.user.last_name`
+ * `<ROOT ATTR>.user.billing_address.address_1`
+ * `<ROOT ATTR>.user.billing_address.address_2`
+ * `<ROOT ATTR>.user.billing_address.city`
+ * `<ROOT ATTR>.user.billing_address.state`
+ * `<ROOT ATTR>.user.billing_address.postcode`
+ * `<ROOT ATTR>.user.billing_address.country_code`
+ * `<ROOT ATTR>.tax_rate`
+ * `<ROOT ATTR>.payment.provider`
+ * `<ROOT ATTR>.payment.transaction_reference`
+ * `<ROOT ATTR>.payment.payment_instrument.type`
+ * `<ROOT ATTR>.payment.payment_instrument.name`
+ * `<ROOT ATTR>.payment.payment_instrument.transaction_reference`
  *
  * Additionally, the `CheckoutOrder::setOrderItems` method takes an array of `\Serato\AppEvents\Event\CheckoutOrderItem`
  * objects and copies their data to:
  *
- * `resource.items`
+ * `<ROOT ATTR>.items`
  *
  *  The same method iterates over the array and calculates values for the following fields:
  *
- * `resource.amounts.base`
- * `resource.amounts.discounts`
- * `resource.amounts.tax`
- * `resource.amounts.total`
+ * `<ROOT ATTR>.amounts.base`
+ * `<ROOT ATTR>.amounts.discounts`
+ * `<ROOT ATTR>.amounts.tax`
+ * `<ROOT ATTR>.amounts.total`
  */
 class CheckoutOrder extends AbstractTimeSeriesEvent
 {
@@ -65,10 +65,10 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
             ->setEventAction(self::EVENT_ACTION)
             # For now, the only supported payment gateway is Braintree
             ->setPaymentGateway(self::BRAINTREE)
-            ->setData('resource.amounts.base', 0)
-            ->setData('resource.amounts.discounts', 0)
-            ->setData('resource.amounts.tax', 0)
-            ->setData('resource.amounts.total', 0);
+            ->setData(self::ROOT_ATTR . '.amounts.base', 0)
+            ->setData(self::ROOT_ATTR . '.amounts.discounts', 0)
+            ->setData(self::ROOT_ATTR . '.amounts.tax', 0)
+            ->setData(self::ROOT_ATTR . '.amounts.total', 0);
     }
 
     /**
@@ -85,7 +85,7 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
      * Sets the following field(s):
      *
      * `event.id`
-     * `resource.id`
+     * `<ROOT ATTR>.id`
      *
      * @param string $id
      * @return self
@@ -94,7 +94,7 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
     {
         return $this
             ->setEventId($id)
-            ->setData('resource.id', $id);
+            ->setData(self::ROOT_ATTR . '.id', $id);
     }
 
     /**
@@ -103,7 +103,7 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
      * Sets the following field(s):
      *
      * `event.provider`
-     * `resource.interactive`
+     * `<ROOT ATTR>.interactive`
      *
      * @param string $i
      * @return self
@@ -112,7 +112,7 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
     {
         return $this
             ->setEventProvider($i ? 'user' : 'webhook')
-            ->setData('resource.interactive', $i);
+            ->setData(self::ROOT_ATTR . '.interactive', $i);
     }
 
     /**
@@ -120,14 +120,14 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `resource.cart_id`
+     * `<ROOT ATTR>.cart_id`
      *
      * @param string $id
      * @return self
      */
     public function setCartId(string $id): self
     {
-        return $this->setData('resource.cart_id', $id);
+        return $this->setData(self::ROOT_ATTR . '.cart_id', $id);
     }
 
     /**
@@ -139,14 +139,14 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `resource.user.id`
+     * `<ROOT ATTR>.user.id`
      *
      * @param string $id
      * @return self
      */
     public function setOrderUserId(string $id): self
     {
-        return $this->setData('resource.user.id', $id);
+        return $this->setData(self::ROOT_ATTR . '.user.id', $id);
     }
 
     /**
@@ -154,14 +154,14 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `resource.user.email_address`
+     * `<ROOT ATTR>.user.email_address`
      *
      * @param string $emailAddress
      * @return self
      */
     public function setUserEmailAddress(string $emailAddress): self
     {
-        return $this->setData('resource.user.email_address', $emailAddress);
+        return $this->setData(self::ROOT_ATTR . '.user.email_address', $emailAddress);
     }
 
     /**
@@ -169,14 +169,14 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `resource.user.first_name`
+     * `<ROOT ATTR>.user.first_name`
      *
      * @param string $firstName
      * @return self
      */
     public function setUserFirstName(string $firstName): self
     {
-        return $this->setData('resource.user.first_name', $firstName);
+        return $this->setData(self::ROOT_ATTR . '.user.first_name', $firstName);
     }
 
     /**
@@ -184,14 +184,14 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `resource.user.last_name`
+     * `<ROOT ATTR>.user.last_name`
      *
      * @param string $lastName
      * @return self
      */
     public function setUserLastName(string $lastName): self
     {
-        return $this->setData('resource.user.last_name', $lastName);
+        return $this->setData(self::ROOT_ATTR . '.user.last_name', $lastName);
     }
 
     /**
@@ -199,14 +199,14 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `resource.user.billing_address.address_1`
+     * `<ROOT ATTR>.user.billing_address.address_1`
      *
      * @param string $address1
      * @return self
      */
     public function setUserBillingAddress1(string $address1): self
     {
-        return $this->setData('resource.user.billing_address.address_1', $address1);
+        return $this->setData(self::ROOT_ATTR . '.user.billing_address.address_1', $address1);
     }
 
     /**
@@ -214,14 +214,14 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `resource.user.billing_address.address_2`
+     * `<ROOT ATTR>.user.billing_address.address_2`
      *
      * @param string $address2
      * @return self
      */
     public function setUserBillingAddress2(string $address2): self
     {
-        return $this->setData('resource.user.billing_address.address_2', $address2);
+        return $this->setData(self::ROOT_ATTR . '.user.billing_address.address_2', $address2);
     }
 
     /**
@@ -229,14 +229,14 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `resource.user.billing_address.city`
+     * `<ROOT ATTR>.user.billing_address.city`
      *
      * @param string $city
      * @return self
      */
     public function setUserBillingAddressCity(string $city): self
     {
-        return $this->setData('resource.user.billing_address.city', $city);
+        return $this->setData(self::ROOT_ATTR . '.user.billing_address.city', $city);
     }
 
     /**
@@ -244,14 +244,14 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `resource.user.billing_address.state`
+     * `<ROOT ATTR>.user.billing_address.state`
      *
      * @param string $state
      * @return self
      */
     public function setUserBillingAddressState(string $state): self
     {
-        return $this->setData('resource.user.billing_address.state', $state);
+        return $this->setData(self::ROOT_ATTR . '.user.billing_address.state', $state);
     }
 
     /**
@@ -259,14 +259,14 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `resource.user.billing_address.postcode`
+     * `<ROOT ATTR>.user.billing_address.postcode`
      *
      * @param string $postcode
      * @return self
      */
     public function setUserBillingAddressPostcode(string $postcode): self
     {
-        return $this->setData('resource.user.billing_address.postcode', $postcode);
+        return $this->setData(self::ROOT_ATTR . '.user.billing_address.postcode', $postcode);
     }
 
     /**
@@ -274,14 +274,14 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `resource.user.billing_address.country_code`
+     * `<ROOT ATTR>.user.billing_address.country_code`
      *
      * @param string $countryCode
      * @return self
      */
     public function setUserBillingAddressCountryCode(string $countryCode): self
     {
-        return $this->setData('resource.user.billing_address.country_code', $countryCode);
+        return $this->setData(self::ROOT_ATTR . '.user.billing_address.country_code', $countryCode);
     }
 
     /**
@@ -289,14 +289,14 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `resource.tax_rate`
+     * `<ROOT ATTR>.tax_rate`
      *
      * @param string $rate
      * @return self
      */
     public function setTaxRate(float $rate): self
     {
-        return $this->setData('resource.tax_rate', $rate);
+        return $this->setData(self::ROOT_ATTR . '.tax_rate', $rate);
     }
 
     /**
@@ -304,7 +304,7 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `resource.payment.gateway`
+     * `<ROOT ATTR>.payment.gateway`
      *
      * @param string $gateway
      * @return self
@@ -312,7 +312,7 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
     public function setPaymentGateway(string $gateway): self
     {
         $this->validateDataValue($gateway, [self::BRAINTREE], __METHOD__);
-        return $this->setData('resource.payment.gateway', $gateway);
+        return $this->setData(self::ROOT_ATTR . '.payment.gateway', $gateway);
     }
 
     /**
@@ -320,14 +320,14 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `resource.payment.gateway_transaction_reference`
+     * `<ROOT ATTR>.payment.gateway_transaction_reference`
      *
      * @param string $ref
      * @return self
      */
     public function setPaymentGatewayTransactionReference(string $ref): self
     {
-        return $this->setData('resource.payment.gateway_transaction_reference', $ref);
+        return $this->setData(self::ROOT_ATTR . '.payment.gateway_transaction_reference', $ref);
     }
 
     /**
@@ -341,17 +341,17 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
     public function setPaymentInstrumentType(string $type): self
     {
         $this->validateDataValue($type, [self::CREDITCARD, self::PAYPAL_ACCOUNT], __METHOD__);
-        return $this->setData('resource.payment.payment_instrument.type', $type);
+        return $this->setData(self::ROOT_ATTR . '.payment.payment_instrument.type', $type);
     }
 
     public function setPaymentInstrumentName(string $name): self
     {
-        return $this->setData('resource.payment.payment_instrument.name', $name);
+        return $this->setData(self::ROOT_ATTR . '.payment.payment_instrument.name', $name);
     }
     
     public function setPaymentInstrumentTransactionReference(string $ref): self
     {
-        return $this->setData('resource.payment.payment_instrument.transaction_reference', $ref);
+        return $this->setData(self::ROOT_ATTR . '.payment.payment_instrument.transaction_reference', $ref);
     }
 
     /**
@@ -362,11 +362,11 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `resource.items`
-     * `resource.amounts.base`
-     * `resource.amounts.discounts`
-     * `resource.amounts.tax`
-     * `resource.amounts.total`
+     * `<ROOT ATTR>.items`
+     * `<ROOT ATTR>.amounts.base`
+     * `<ROOT ATTR>.amounts.discounts`
+     * `<ROOT ATTR>.amounts.tax`
+     * `<ROOT ATTR>.amounts.total`
      *
      * @param array $orderItems
      * @return self
@@ -399,11 +399,11 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
         }
 
         return $this
-            ->setData('resource.items', $data)
-            ->setData('resource.amounts.base', $base)
-            ->setData('resource.amounts.discounts', $discounts)
-            ->setData('resource.amounts.tax', $tax)
-            ->setData('resource.amounts.total', $total);
+            ->setData(self::ROOT_ATTR . '.items', $data)
+            ->setData(self::ROOT_ATTR . '.amounts.base', $base)
+            ->setData(self::ROOT_ATTR . '.amounts.discounts', $discounts)
+            ->setData(self::ROOT_ATTR . '.amounts.tax', $tax)
+            ->setData(self::ROOT_ATTR . '.amounts.total', $total);
     }
 
     /**
@@ -412,7 +412,7 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `resource.invoices`
+     * `<ROOT ATTR>.invoices`
      *
      * @param array $orderInvoices
      * @return self
@@ -428,6 +428,6 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
             }
             $data[] = $invoice->get();
         }
-        return $this->setData('resource.invoices', $data);
+        return $this->setData(self::ROOT_ATTR . '.invoices', $data);
     }
 }
