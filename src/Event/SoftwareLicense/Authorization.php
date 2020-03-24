@@ -1,14 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Serato\AppEvents\Event;
+namespace Serato\AppEvents\Event\SoftwareLicense;
 
 use DateTime;
 use Serato\AppEvents\HostMachineUid;
+use Serato\AppEvents\Event\AbstractTimeSeriesEvent;
 use Serato\AppEvents\Exception\InvalidHostMachineUidException;
 
 /**
- * ** LicenseAuthorization **
+ * ** Authorization **
  *
  * Captures data attributes related to a license authorisation event and allows the
  * data to to be send to a logging target.
@@ -43,7 +44,7 @@ use Serato\AppEvents\Exception\InvalidHostMachineUidException;
  * `<ROOT ATTR>.license_authorization.license.product.product_type.id`
  * `<ROOT ATTR>.license_authorization.license.product.product_type.name`
  */
-class LicenseAuthorization extends AbstractTimeSeriesEvent
+class Authorization extends AbstractTimeSeriesEvent
 {
     public const AUTHORIZE = 'Authorize';
     public const DEAUTHORIZE = 'De-authorize';
@@ -55,7 +56,22 @@ class LicenseAuthorization extends AbstractTimeSeriesEvent
     public function __construct()
     {
         parent::__construct();
-        $this->setEventCategory('license-authorization');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getEventCategory(): string
+    {
+        return 'software_license';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getEventAction(): string
+    {
+        return 'authorization';
     }
 
     /**

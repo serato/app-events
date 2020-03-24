@@ -21,7 +21,6 @@ use Serato\AppEvents\EventTarget\AbstractEventTarget;
  * `http.request.referrer`
  * `user_agent.original`
  * `event.id`
- * `event.category`
  * `event.action`
  * `event.start`
  * `event.end`
@@ -38,7 +37,32 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventData
     public function __construct()
     {
         $this->setEventStart(new DateTime);
+        $this->setEventAction([$this->getEventCategory(), $this->getEventAction()]);
     }
+
+    /**
+     * Returns the category of the event.
+     *
+     * Categories are a way of bucketing events together. Category names should by broad
+     * and logically encapsulate one or more events. eg "checkout", "license_authorization".
+     *
+     * Category names should use snake casing.
+     *
+     * @return string
+     */
+    abstract public function getEventCategory(): string;
+
+    /**
+     * Returns the name of the event.
+     *
+     * Event actions denote the specific action with a category bucket.
+     * eg. "order_created", "deactivate"
+     *
+     * Category names should use snake casing.
+     *
+     * @return string
+     */
+    abstract public function getEventAction(): string;
 
     /**
      * Logs the event to the specified log target
@@ -129,31 +153,16 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventData
     }
 
     /**
-     * Sets the event category.
-     *
-     * Sets the following field(s):
-     *
-     * `event.category`
-     *
-     * @param string $category
-     * @return self
-     */
-    public function setEventCategory(string $category): self
-    {
-        return $this->setData('event.category', $category);
-    }
-
-    /**
      * Sets the event action
      *
      * Sets the following field(s):
      *
      * `event.action`
      *
-     * @param string $action
+     * @param array $action
      * @return self
      */
-    public function setEventAction(string $action): self
+    protected function setEventAction(array $action): self
     {
         return $this->setData('event.action', $action);
     }

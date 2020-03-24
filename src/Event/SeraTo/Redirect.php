@@ -1,10 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Serato\AppEvents\Event;
+namespace Serato\AppEvents\Event\SeraTo;
+
+use Serato\AppEvents\Event\AbstractTimeSeriesEvent;
 
 /**
- * ** SeraToRedirect **
+ * ** Redirect **
  *
  * Captures data attributes related to a sera.to redirect event and allows the
  * data to to be send to a logging target.
@@ -17,8 +19,24 @@ namespace Serato\AppEvents\Event;
  * `<ROOT ATTR>.sera_to_redirect.short_url`
  * `<ROOT ATTR>.sera_to_redirect.destination_url`
  */
-class SeraToRedirect extends AbstractTimeSeriesEvent
+class Redirect extends AbstractTimeSeriesEvent
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function getEventCategory(): string
+    {
+        return 'sera_to';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getEventAction(): string
+    {
+        return 'redirect';
+    }
+
     /**
      * {@inheritdoc}
      */

@@ -1,16 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace Serato\AppEvents\Event;
+namespace Serato\AppEvents\Event\Checkout;
 
+use Serato\AppEvents\Event\AbstractEventData;
 use Exception;
 
 /**
- * ** CheckoutOrderItem **
+ * ** OrderItem **
  *
  * Captures data attributes related to a checkout order item.
  *
- * CheckoutOrderItem instances must be added to a CheckoutOrder instance
+ * OrderItem instances must be added to an Order instance
  * if they are intended to be sent to a logging backend.
  *
  * Sets the following fields:
@@ -29,12 +30,12 @@ use Exception;
  * `sku.license_term`
  * `subscription_id`
  *
- * Additionally, the `CheckoutOrderItem::setPromotions` method takes an array of
- * `\Serato\AppEvents\Event\CheckoutOrderItemPromotion` objects and copies their data to:
+ * Additionally, the `OrderItem::setPromotions` method takes an array of
+ * `\Serato\AppEvents\Event\Checkout\OrderItemPromotion` objects and copies their data to:
  *
  * `promotions`
  */
-class CheckoutOrderItem extends AbstractEventData
+class OrderItem extends AbstractEventData
 {
     public const TAXCODE_Z = 'Z';
     public const TAXCODE_V = 'V';
@@ -324,7 +325,7 @@ class CheckoutOrderItem extends AbstractEventData
     }
 
     /**
-     * Adds an array of `Serato\AppEvents\Event\CheckoutOrderItemPromotion` objects to the
+     * Adds an array of `Serato\AppEvents\Event\Checkout\OrderItemPromotion` objects to the
      * instance.
      *
      * Sets the following field(s):
@@ -338,9 +339,9 @@ class CheckoutOrderItem extends AbstractEventData
     {
         $items = [];
         foreach ($promotions as $checkoutOrderItemPromotion) {
-            if (!is_a($checkoutOrderItemPromotion, '\Serato\AppEvents\Event\CheckoutOrderItemPromotion')) {
+            if (!is_a($checkoutOrderItemPromotion, '\Serato\AppEvents\Event\Checkout\OrderItemPromotion')) {
                 throw new Exception(
-                    'Invalid argument. Items must all be \Serato\AppEvents\Event\CheckoutOrderItemPromotion instances'
+                    'Invalid argument. Items must all be \Serato\AppEvents\Event\Checkout\OrderItemPromotion instances'
                 );
             }
             $items[] = $checkoutOrderItemPromotion->get();

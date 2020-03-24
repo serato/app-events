@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Serato\AppEvents\Event;
+namespace Serato\AppEvents\Event\Checkout;
 
 use Exception;
 
@@ -36,7 +36,7 @@ use Exception;
  * `<ROOT ATTR>.checkout_order.payment.payment_instrument.name`
  * `<ROOT ATTR>.checkout_order.payment.payment_instrument.transaction_reference`
  *
- * Additionally, the `CheckoutOrder::setOrderItems` method takes an array of `\Serato\AppEvents\Event\CheckoutOrderItem`
+ * Additionally, the `CheckoutOrder::setOrderItems` method takes an array of `\Serato\AppEvents\Event\Checkout\OrderItem`
  * objects and copies their data to:
  *
  * `<ROOT ATTR>.checkout_order.items`
@@ -48,7 +48,7 @@ use Exception;
  * `<ROOT ATTR>.checkout_order.amounts.tax`
  * `<ROOT ATTR>.checkout_order.amounts.total`
  */
-class CheckoutOrder extends AbstractTimeSeriesEvent
+class Order extends AbstractTimeSeriesCheckoutEvent
 {
     public const BRAINTREE = 'braintree';
     public const CREDITCARD = 'creditcard';
@@ -59,16 +59,21 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
     public function __construct()
     {
         parent::__construct();
-
         $this
-            ->setEventCategory(self::EVENT_CATEGORY)
-            ->setEventAction(self::EVENT_ACTION)
             # For now, the only supported payment gateway is Braintree
             ->setPaymentGateway(self::BRAINTREE)
             ->setData($this->getEventDataRootAttribute() . '.amounts.base', 0)
             ->setData($this->getEventDataRootAttribute() . '.amounts.discounts', 0)
             ->setData($this->getEventDataRootAttribute() . '.amounts.tax', 0)
             ->setData($this->getEventDataRootAttribute() . '.amounts.total', 0);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getEventAction(): string
+    {
+        return 'order_created';
     }
 
     /**
@@ -355,7 +360,7 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
     }
 
     /**
-     * Adds an array of `Serato\AppEvents\Event\CheckoutOrderItem` objects to the
+     * Adds an array of `Serato\AppEvents\Event\Checkout\OrderItem` objects to the
      * instance.
      *
      * Also uses the underlying item data to build up the total amounts for the instance.
@@ -380,9 +385,9 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
         $total = 0;
 
         foreach ($orderItems as $checkoutOrderItem) {
-            if (!is_a($checkoutOrderItem, '\Serato\AppEvents\Event\CheckoutOrderItem')) {
+            if (!is_a($checkoutOrderItem, '\Serato\AppEvents\Event\Checkout\OrderItem')) {
                 throw new Exception(
-                    'Invalid argument. Items must all be \Serato\AppEvents\Event\CheckoutOrderItem instances'
+                    'Invalid argument. Items must all be \Serato\AppEvents\Event\Checkout\OrderItem instances'
                 );
             }
 
@@ -407,7 +412,7 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
     }
 
     /**
-     * Adds an array of `Serato\AppEvents\Event\CheckoutOrderInvoice` objects to the
+     * Adds an array of `Serato\AppEvents\Event\Checkout\OrderInvoice` objects to the
      * instance.
      *
      * Sets the following field(s):
@@ -421,9 +426,9 @@ class CheckoutOrder extends AbstractTimeSeriesEvent
     {
         $data = [];
         foreach ($orderInvoices as $invoice) {
-            if (!is_a($invoice, '\Serato\AppEvents\Event\CheckoutOrderInvoice')) {
+            if (!is_a($invoice, '\Serato\AppEvents\Event\Checkout\OrderInvoice')) {
                 throw new Exception(
-                    'Invalid argument. Items must all be \Serato\AppEvents\Event\CheckoutOrderInvoice instances'
+                    'Invalid argument. Items must all be \Serato\AppEvents\Event\Checkout\OrderInvoice instances'
                 );
             }
             $data[] = $invoice->get();

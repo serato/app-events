@@ -12,6 +12,9 @@ use Serato\AppEvents\Exception\InvalidDataValueException;
  *
  * Includes helper functions for converting disprate source data
  * into common values
+ * Sets the following fields:
+ *
+ * `event.kind`
  */
 abstract class AbstractEventData implements SendableEventInterface
 {
@@ -31,6 +34,7 @@ abstract class AbstractEventData implements SendableEventInterface
 
     public function __construct()
     {
+        return $this->setData('event.kind', 'event');
     }
 
     /**

@@ -1,10 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Serato\AppEvents\Event;
+namespace Serato\AppEvents\Event\DigitalAsset;
+
+use Serato\AppEvents\Event\AbstractTimeSeriesEvent;
 
 /**
- * ** AssetDownload **
+ * ** Download **
  *
  * Captures data attributes related to an asset download event and allows the
  * data to to be send to a logging target.
@@ -25,7 +27,7 @@ namespace Serato\AppEvents\Event;
  * `<ROOT ATTR>.asset_download.file.application_installer.release_type`
  * `<ROOT ATTR>.asset_download.file.application_installer.os.platform`
  */
-class AssetDownload extends AbstractTimeSeriesEvent
+class Download extends AbstractTimeSeriesEvent
 {
     public function __construct()
     {
@@ -36,6 +38,22 @@ class AssetDownload extends AbstractTimeSeriesEvent
         $this->setData($this->getEventDataRootAttribute() . '.file.type', 'file');
         # The event always starts in the `incomplete` state
         $this->setEventOutcome(self::INCOMPLETE);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getEventCategory(): string
+    {
+        return 'digital_asset';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getEventAction(): string
+    {
+        return 'download';
     }
 
     /**

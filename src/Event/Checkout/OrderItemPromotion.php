@@ -1,14 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace Serato\AppEvents\Event;
+namespace Serato\AppEvents\Event\Checkout;
+
+use Serato\AppEvents\Event\AbstractEventData;
 
 /**
- * ** CheckoutOrderItemDiscount **
+ * ** OrderItemPromotion **
  *
- * Captures data attributes related to a checkout order item discount.
+ * Captures data attributes related to a checkout order item promotion.
  *
- * CheckoutOrderItemDiscount instances must be added to a CheckoutOrderItem instance
+ * OrderItemPromotion instances must be added to a OrderItem instance
  * if they are intended to be sent to a logging backend.
  *
  * Sets the following fields:
@@ -19,7 +21,7 @@ namespace Serato\AppEvents\Event;
  * `discount_percentage`
  * `discount_fixed_amount`
  */
-class CheckoutOrderItemPromotion extends AbstractEventData
+class OrderItemPromotion extends AbstractEventData
 {
     /**
      * {@inheritdoc}

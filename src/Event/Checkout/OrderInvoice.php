@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Serato\AppEvents\Event;
+namespace Serato\AppEvents\Event\Checkout;
 
 use Exception;
 
@@ -19,8 +19,8 @@ use Exception;
  * `id`
  * `debtor_code`
  *
- * Additionally, the `CheckoutOrderInvoice::setInvoiceItems` method takes an array of
- * `\Serato\AppEvents\Event\CheckoutOrderItem` objects and copies their data to:
+ * Additionally, the `OrderInvoice::setInvoiceItems` method takes an array of
+ * `\Serato\AppEvents\Event\Checkout\OrderItem` objects and copies their data to:
  *
  * `items`
  *
@@ -31,7 +31,7 @@ use Exception;
  * `amounts.tax`
  * `amounts.total`
  */
-class CheckoutOrderInvoice extends AbstractTimeSeriesEvent
+class OrderInvoice extends AbstractTimeSeriesCheckoutEvent
 {
     public const EVENT_CATEGORY = 'checkout';
     public const EVENT_ACTION = 'invoice_created';
@@ -43,10 +43,14 @@ class CheckoutOrderInvoice extends AbstractTimeSeriesEvent
     public function __construct()
     {
         parent::__construct();
+    }
 
-        $this
-            ->setEventCategory(self::EVENT_CATEGORY)
-            ->setEventAction(self::EVENT_ACTION);
+    /**
+     * {@inheritDoc}
+     */
+    public function getEventAction(): string
+    {
+        return 'invoice_created';
     }
 
     /**
@@ -92,7 +96,7 @@ class CheckoutOrderInvoice extends AbstractTimeSeriesEvent
     }
 
     /**
-     * Adds an array of `Serato\AppEvents\Event\CheckoutOrderItem` objects to the
+     * Adds an array of `Serato\AppEvents\Event\Checkout\OrderItem` objects to the
      * instance.
      *
      * Also uses the underlying item data to build up the total amounts for the instance.
@@ -108,7 +112,7 @@ class CheckoutOrderInvoice extends AbstractTimeSeriesEvent
      * @param array $orderItems
      * @return self
      */
-    public function setInvoiceItems(array $orderItems): self
+    public function setInvoiceItems(array $items): self
     {
         $data = [];
         $base = 0;
@@ -116,10 +120,10 @@ class CheckoutOrderInvoice extends AbstractTimeSeriesEvent
         $tax = 0;
         $total = 0;
 
-        foreach ($orderItems as $checkoutOrderItem) {
-            if (!is_a($checkoutOrderItem, '\Serato\AppEvents\Event\CheckoutOrderItem')) {
+        foreach ($items as $checkoutOrderItem) {
+            if (!is_a($checkoutOrderItem, '\Serato\AppEvents\Event\Checkout\OrderItem')) {
                 throw new Exception(
-                    'Invalid argument. Items must all be \Serato\AppEvents\Event\CheckoutOrderItem instances'
+                    'Invalid argument. Items must all be \Serato\AppEvents\Event\Checkout\OrderItem instances'
                 );
             }
 
