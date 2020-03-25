@@ -101,7 +101,10 @@ class Authorization extends AbstractTimeSeriesEvent
      */
     public function setAuthorizationValidTo(DateTime $dt): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.authorization.valid_to', $dt->format(DateTime::ATOM));
+        return $this->setData(
+            $this->getEventDataRootAttribute() . '.authorization.valid_to',
+            $dt->format(DateTime::ATOM)
+        );
     }
 
     /**
