@@ -22,10 +22,6 @@ abstract class AbstractEventData implements SendableEventInterface
     public const LICENSE_TERM_SUBSCRIPTION = 'subscription';
     public const LICENSE_TERM_TIMELIMITED = 'timelimited';
 
-    public const ENV_DEV = 'dev';
-    public const ENV_TEST = 'test';
-    public const ENV_PROD = 'production';
-
     /* @var array */
     private $data = [];
 
@@ -84,32 +80,6 @@ abstract class AbstractEventData implements SendableEventInterface
     public function getAppName(): ?string
     {
         return $this->getData('labels.application') === null ? null : (string)$this->getData('labels.application');
-    }
-
-    /**
-     * Sets the environment
-     *
-     * Sets the following field(s):
-     *
-     * `labels.env`
-     *
-     * @param string $env
-     * @return self
-     */
-    public function setEnvironment(string $env): self
-    {
-        $this->validateDataValue($env, [self::ENV_DEV, self::ENV_TEST, self::ENV_PROD], __METHOD__);
-        return $this->setData('labels.env', $env);
-    }
-
-    /**
-     * Returns the environment
-     *
-     * @return string|null
-     */
-    public function getEnvironment(): ?string
-    {
-        return $this->getData('labels.env') === null ? null : (string)$this->getData('labels.env');
     }
 
     /**

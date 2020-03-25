@@ -46,19 +46,4 @@ interface SendableEventInterface
      * @return string|null
      */
     public function getAppName(): ?string;
-
-    /**
-     * Sets the environment that the application is running in
-     *
-     * @param string $env
-     * @return self
-     */
-    public function setEnvironment(string $env): self;
-
-    /**
-     * Returns the environment
-     *
-     * @return string|null
-     */
-    public function getEnvironment(): ?string;
 }

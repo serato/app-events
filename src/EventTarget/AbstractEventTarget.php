@@ -10,19 +10,14 @@ abstract class AbstractEventTarget
     /** @var string */
     private $appName;
 
-    /** @var string */
-    private $env;
-
     /**
      * Constructs the object
      *
      * @param string $appName
-     * @param string $env
      */
-    public function __construct(string $appName, string $env)
+    public function __construct(string $appName)
     {
         $this->appName = $appName;
-        $this->env = $env;
     }
 
     /**
@@ -33,10 +28,7 @@ abstract class AbstractEventTarget
      */
     public function sendEvent(SendableEventInterface $event): void
     {
-        $event
-            ->setAppName($this->getAppName())
-            ->setEnvironment($this->getEnvironment());
-        
+        $event->setAppName($this->getAppName());
         $this->send($event);
     }
 
@@ -56,15 +48,5 @@ abstract class AbstractEventTarget
     public function getAppName(): string
     {
         return $this->appName;
-    }
-
-    /**
-     * Returns the environment
-     *
-     * @return string
-     */
-    public function getEnvironment(): string
-    {
-        return $this->env;
     }
 }
