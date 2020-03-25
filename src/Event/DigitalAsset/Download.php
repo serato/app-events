@@ -57,14 +57,6 @@ class Download extends AbstractTimeSeriesEvent
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getName(): string
-    {
-        return 'asset_download';
-    }
-
-    /**
      * Sets the internal file ID of the downloaded file.
      *
      * Sets the following field(s):

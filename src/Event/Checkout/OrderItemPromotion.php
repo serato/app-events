@@ -24,14 +24,6 @@ use Serato\AppEvents\Event\AbstractEventData;
 class OrderItemPromotion extends AbstractEventData
 {
     /**
-     * {@inheritdoc}
-     */
-    public function getName(): string
-    {
-        return 'checkout_order_item_promotion';
-    }
-
-    /**
      * Sets the promotion ID.
      *
      * Sets the following field(s):

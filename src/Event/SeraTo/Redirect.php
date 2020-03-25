@@ -38,14 +38,6 @@ class Redirect extends AbstractTimeSeriesEvent
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getName(): string
-    {
-        return 'sera_to_redirect';
-    }
-
-    /**
      * Sets the redirect ID
      *
      * Sets the following field(s):

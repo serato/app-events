@@ -35,7 +35,7 @@ class LogFile extends AbstractEventTarget
      */
     protected function send(SendableEventInterface $event): void
     {
-        $this->logger->info($event->getName(), $event->get());
+        $this->logger->info($event->getEventCategory() . '.' . $event->getEventAction(), $event->get());
     }
 
     /**

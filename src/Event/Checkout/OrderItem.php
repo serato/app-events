@@ -55,13 +55,6 @@ class OrderItem extends AbstractEventData
             ->setAmountsTax(0)
             ->setAmountsTotal(0);
     }
-    /**
-     * {@inheritdoc}
-     */
-    public function getName(): string
-    {
-        return 'checkout_order_item';
-    }
 
     /**
      * Sets the order item ID.

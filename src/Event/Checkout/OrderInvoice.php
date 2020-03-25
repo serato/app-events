@@ -54,14 +54,6 @@ class OrderInvoice extends AbstractTimeSeriesCheckoutEvent
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getName(): string
-    {
-        return 'checkout_invoice';
-    }
-
-    /**
      * Sets the invoice ID.
      *
      * Sets the following field(s):

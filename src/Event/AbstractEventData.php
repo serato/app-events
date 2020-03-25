@@ -38,11 +38,28 @@ abstract class AbstractEventData implements SendableEventInterface
     }
 
     /**
-     * Returns the name of the event
+     * Returns the category of the event.
+     *
+     * Categories are a way of bucketing events together. Category names should by broad
+     * and logically encapsulate one or more events. eg "checkout", "license_authorization".
+     *
+     * Category names should use snake casing.
      *
      * @return string
      */
-    abstract public function getName(): string;
+    abstract public function getEventCategory(): string;
+
+    /**
+     * Returns the name of the event.
+     *
+     * Event actions denote the specific action with a category bucket.
+     * eg. "order_created", "deactivate"
+     *
+     * Category names should use snake casing.
+     *
+     * @return string
+     */
+    abstract public function getEventAction(): string;
 
     /**
      * Sets the application name

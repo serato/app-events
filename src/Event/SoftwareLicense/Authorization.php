@@ -75,14 +75,6 @@ class Authorization extends AbstractTimeSeriesEvent
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getName(): string
-    {
-        return 'license_authorization';
-    }
-
-    /**
      * Sets the authorization ID
      *
      * Sets the following field(s):

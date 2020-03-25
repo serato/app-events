@@ -77,14 +77,6 @@ class Order extends AbstractTimeSeriesCheckoutEvent
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getName(): string
-    {
-        return 'checkout_order';
-    }
-
-    /**
      * Sets the order ID.
      *
      * Sets the following field(s):

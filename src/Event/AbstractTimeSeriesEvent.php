@@ -28,7 +28,7 @@ use Serato\AppEvents\EventTarget\AbstractEventTarget;
  */
 abstract class AbstractTimeSeriesEvent extends AbstractEventData
 {
-    protected const ROOT_ATTR = 'serato';
+    private const ROOT_ATTR = 'serato';
 
     public const SUCCESS = 'success';
     public const FAILURE = 'failure';
@@ -39,30 +39,6 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventData
         $this->setEventStart(new DateTime);
         $this->setEventAction([$this->getEventCategory(), $this->getEventAction()]);
     }
-
-    /**
-     * Returns the category of the event.
-     *
-     * Categories are a way of bucketing events together. Category names should by broad
-     * and logically encapsulate one or more events. eg "checkout", "license_authorization".
-     *
-     * Category names should use snake casing.
-     *
-     * @return string
-     */
-    abstract public function getEventCategory(): string;
-
-    /**
-     * Returns the name of the event.
-     *
-     * Event actions denote the specific action with a category bucket.
-     * eg. "order_created", "deactivate"
-     *
-     * Category names should use snake casing.
-     *
-     * @return string
-     */
-    abstract public function getEventAction(): string;
 
     /**
      * Logs the event to the specified log target
@@ -232,6 +208,6 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventData
 
     protected function getEventDataRootAttribute(): string
     {
-        return $this->getEventDataRootAttribute() . '.' . $this->getName();
+        return $this->getEventDataRootAttribute() . '.event_data';
     }
 }
