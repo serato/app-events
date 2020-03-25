@@ -145,7 +145,6 @@ class Authorization extends AbstractTimeSeriesEvent
      * Sets the following field(s):
      *
      * `<ROOT ATTR>.license_authorization.authorization.action`
-     * `event.action`
      *
      * @param string $action
      * @return self
@@ -160,9 +159,7 @@ class Authorization extends AbstractTimeSeriesEvent
         if ($action == 'De-authorize') {
             $v = 'deactivate';
         };
-        return $this
-            ->setEventAction($v)
-            ->setData($this->getEventDataRootAttribute() . '.authorization.action', $v);
+        return $this->setData($this->getEventDataRootAttribute() . '.authorization.action', $v);
     }
 
     /**
