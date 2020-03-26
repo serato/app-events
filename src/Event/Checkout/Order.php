@@ -25,10 +25,10 @@ use Exception;
  * `<ROOT ATTR>.checkout_order.user.last_name`
  * `<ROOT ATTR>.checkout_order.user.billing_address.address_1`
  * `<ROOT ATTR>.checkout_order.user.billing_address.address_2`
- * `<ROOT ATTR>.checkout_order.user.billing_address.city`
- * `<ROOT ATTR>.checkout_order.user.billing_address.state`
+ * `<ROOT ATTR>.checkout_order.user.billing_address.city_name`
+ * `<ROOT ATTR>.checkout_order.user.billing_address.region_name`
  * `<ROOT ATTR>.checkout_order.user.billing_address.postcode`
- * `<ROOT ATTR>.checkout_order.user.billing_address.country_code`
+ * `<ROOT ATTR>.checkout_order.user.billing_address.country_iso_code`
  * `<ROOT ATTR>.checkout_order.tax_rate`
  * `<ROOT ATTR>.checkout_order.payment.provider`
  * `<ROOT ATTR>.checkout_order.payment.transaction_reference`
@@ -36,8 +36,8 @@ use Exception;
  * `<ROOT ATTR>.checkout_order.payment.payment_instrument.name`
  * `<ROOT ATTR>.checkout_order.payment.payment_instrument.transaction_reference`
  *
- * Additionally, the `CheckoutOrder::setOrderItems` method takes an array of `\Serato\AppEvents\Event\Checkout\OrderItem`
- * objects and copies their data to:
+ * Additionally, the `CheckoutOrder::setOrderItems` method takes an array of
+ * `\Serato\AppEvents\Event\Checkout\OrderItem` objects and copies their data to:
  *
  * `<ROOT ATTR>.checkout_order.items`
  *
@@ -99,7 +99,6 @@ class Order extends AbstractTimeSeriesCheckoutEvent
      *
      * Sets the following field(s):
      *
-     * `event.provider`
      * `<ROOT ATTR>.checkout_order.interactive`
      *
      * @param string $i
@@ -108,7 +107,6 @@ class Order extends AbstractTimeSeriesCheckoutEvent
     public function setOrderInteractive(bool $i): self
     {
         return $this
-            ->setEventProvider($i ? 'user' : 'webhook')
             ->setData($this->getEventDataRootAttribute() . '.interactive', $i);
     }
 
@@ -226,29 +224,29 @@ class Order extends AbstractTimeSeriesCheckoutEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.checkout_order.user.billing_address.city`
+     * `<ROOT ATTR>.checkout_order.user.billing_address.city_name`
      *
      * @param string $city
      * @return self
      */
     public function setUserBillingAddressCity(string $city): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.user.billing_address.city', $city);
+        return $this->setData($this->getEventDataRootAttribute() . '.user.billing_address.city_name', $city);
     }
 
     /**
-     * Sets the order user billing address state.
+     * Sets the order user billing address region_name.
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.checkout_order.user.billing_address.state`
+     * `<ROOT ATTR>.checkout_order.user.billing_address.region_name`
      *
-     * @param string $state
+     * @param string $region
      * @return self
      */
-    public function setUserBillingAddressState(string $state): self
+    public function setUserBillingAddressRegion(string $region): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.user.billing_address.state', $state);
+        return $this->setData($this->getEventDataRootAttribute() . '.user.billing_address.region_name', $region);
     }
 
     /**
@@ -271,14 +269,17 @@ class Order extends AbstractTimeSeriesCheckoutEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.checkout_order.user.billing_address.country_code`
+     * `<ROOT ATTR>.checkout_order.user.billing_address.country_iso_code`
      *
      * @param string $countryCode
      * @return self
      */
     public function setUserBillingAddressCountryCode(string $countryCode): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.user.billing_address.country_code', $countryCode);
+        return $this->setData(
+            $this->getEventDataRootAttribute() . '.user.billing_address.country_iso_code',
+            $countryCode
+        );
     }
 
     /**

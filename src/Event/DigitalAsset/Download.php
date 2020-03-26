@@ -36,8 +36,8 @@ class Download extends AbstractTimeSeriesEvent
         # https://www.elastic.co/guide/en/ecs/current/ecs-file.html
         # For our purposes here it's always `file`.
         $this->setData($this->getEventDataRootAttribute() . '.file.type', 'file');
-        # The event always starts in the `incomplete` state
-        $this->setEventOutcome(self::INCOMPLETE);
+        # The event always starts in the `unknown` state
+        $this->setEventOutcome(self::UNKNOWN);
     }
 
     /**

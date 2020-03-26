@@ -32,7 +32,7 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventData
 
     public const SUCCESS = 'success';
     public const FAILURE = 'failure';
-    public const INCOMPLETE = 'incomplete';
+    public const UNKNOWN = 'unknown';
 
     public function __construct()
     {
@@ -187,7 +187,7 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventData
      */
     public function setEventOutcome(string $outcome): self
     {
-        $this->validateDataValue($outcome, [self::SUCCESS, self::FAILURE, self::INCOMPLETE], __METHOD__);
+        $this->validateDataValue($outcome, [self::SUCCESS, self::FAILURE, self::UNKNOWN], __METHOD__);
         return $this->setData('event.outcome', $outcome);
     }
 
