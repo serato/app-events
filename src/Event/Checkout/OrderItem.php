@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Serato\AppEvents\Event\Checkout;
 
-use Serato\AppEvents\Event\AbstractEventData;
+use Serato\AppEvents\Event\AbstractDataContainer;
 use Exception;
 
 /**
@@ -35,7 +35,7 @@ use Exception;
  *
  * `promotions`
  */
-class OrderItem extends AbstractEventData
+class OrderItem extends AbstractDataContainer
 {
     public const TAXCODE_Z = 'Z';
     public const TAXCODE_V = 'V';

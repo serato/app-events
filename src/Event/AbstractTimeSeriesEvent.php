@@ -26,7 +26,7 @@ use Serato\AppEvents\EventTarget\AbstractEventTarget;
  * `event.end`
  * `event.outcome`
  */
-abstract class AbstractTimeSeriesEvent extends AbstractEventData
+abstract class AbstractTimeSeriesEvent extends AbstractEventDataContainer
 {
     private const ROOT_ATTR = 'serato';
 
@@ -189,21 +189,6 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventData
     {
         $this->validateDataValue($outcome, [self::SUCCESS, self::FAILURE, self::UNKNOWN], __METHOD__);
         return $this->setData('event.outcome', $outcome);
-    }
-
-    /**
-     * Sets the event provider.
-     *
-     * Sets the following field(s):
-     *
-     * `event.provider`
-     *
-     * @param string $provider
-     * @return self
-     */
-    public function setEventProvider(string $provider): self
-    {
-        return $this->setData('event.provider', $provider);
     }
 
     protected function getEventDataRootAttribute(): string

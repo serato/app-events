@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Serato\AppEvents\Event\Checkout;
 
-use Serato\AppEvents\Event\AbstractEventData;
+use Serato\AppEvents\Event\AbstractDataContainer;
 
 /**
  * ** OrderItemPromotion **
@@ -21,7 +21,7 @@ use Serato\AppEvents\Event\AbstractEventData;
  * `discount_percentage`
  * `discount_fixed_amount`
  */
-class OrderItemPromotion extends AbstractEventData
+class OrderItemPromotion extends AbstractDataContainer
 {
     /**
      * Sets the promotion ID.

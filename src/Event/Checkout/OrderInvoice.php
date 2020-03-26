@@ -40,11 +40,6 @@ class OrderInvoice extends AbstractTimeSeriesCheckoutEvent
     public const WEBC003 = 'WEBC003';
     public const WEBC004 = 'WEBC004';
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     /**
      * {@inheritDoc}
      */
