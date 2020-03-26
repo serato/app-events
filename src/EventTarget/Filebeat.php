@@ -9,7 +9,7 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Formatter\JsonFormatter;
 
-class LogFile extends AbstractEventTarget
+class Filebeat extends AbstractEventTarget
 {
     /** @var LoggerInterface */
     private $logger;
@@ -18,15 +18,14 @@ class LogFile extends AbstractEventTarget
      * Constructs the object
      *
      * @param string $appName
-     * @param string $env
      */
-    public function __construct(string $appName, string $env, string $logFilePath)
+    public function __construct(string $appName, string $logFilePath)
     {
-        parent::__construct($appName, $env);
+        parent::__construct($appName);
 
         $stream = new StreamHandler($logFilePath, Logger::INFO);
         $stream->setFormatter(new JsonFormatter);
-        $this->logger = new Logger('serato_app_events');
+        $this->logger = new Logger($appName . ' Filebeat Logger');
         $this->logger->pushHandler($stream);
     }
 
