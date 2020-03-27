@@ -46,7 +46,6 @@ class OrderItem extends AbstractDataContainer
 
     public function __construct()
     {
-        parent::__construct();
         $this
             ->setQuantity(1)
             ->setTaxRate(0)
@@ -130,7 +129,7 @@ class OrderItem extends AbstractDataContainer
      */
     public function setSkuLicenseTerm(string $term): self
     {
-        $this->validateDataValue($code, [self::PERMANENT, self::SUBSCRIPTION, self::TIMELIMITED], __METHOD__);
+        $this->validateDataValue($term, [self::PERMANENT, self::SUBSCRIPTION, self::TIMELIMITED], __METHOD__);
         return $this->setData('sku.license_term', $term);
     }
 
@@ -327,6 +326,7 @@ class OrderItem extends AbstractDataContainer
      *
      * @param array $items
      * @return self
+     * @throws Exception
      */
     public function setPromotions(array $promotions): self
     {

@@ -193,9 +193,9 @@ abstract class AbstractDataContainer
      */
     protected function validateDataValue($val, array $accepted, string $methodName): void
     {
-        if (!in_array($val, $expected)) {
+        if (!in_array($val, $accepted)) {
             throw new InvalidDataValueException(
-                "Invalid value `" . $accepted . "` provided to method `" . $methodName . "`.\n" .
+                "Invalid value `" . $val . "` provided to method `" . $methodName . "`.\n" .
                 "Accepted values are `" . implode("`, `", $accepted) . "`."
             );
         }
