@@ -41,7 +41,24 @@ class OrderInvoiceTest extends AbstractTestCase
             ->setInvoiceItems([$orderItem]);
 
         $this->assertTrue(is_array($event->get()));
+        $this->assertEquals([$event->getEventActionCategory(), $event->getEventActionName()], $event->getEventAction());
     }
 
-    // invalid setDebtorCode
+    /**
+     * @expectedException \Exception
+     */
+    public function testInvaidSetInvoiceItems(): void
+    {
+        $event = new OrderInvoice;
+        $event->setInvoiceItems([1]);
+    }
+
+    /**
+     * @expectedException \Serato\AppEvents\Exception\InvalidDataValueException
+     */
+    public function testInvalidDebtorCode(): void
+    {
+        $event = new OrderInvoice;
+        $event->setDebtorCode('DEFO-INVALID');
+    }
 }
