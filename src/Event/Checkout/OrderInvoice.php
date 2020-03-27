@@ -33,9 +33,6 @@ use Exception;
  */
 class OrderInvoice extends AbstractTimeSeriesCheckoutEvent
 {
-    public const EVENT_CATEGORY = 'checkout';
-    public const EVENT_ACTION = 'invoice_created';
-
     public const WEBC001 = 'WEBC001';
     public const WEBC003 = 'WEBC003';
     public const WEBC004 = 'WEBC004';

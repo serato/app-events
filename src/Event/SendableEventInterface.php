@@ -36,9 +36,8 @@ interface SendableEventInterface
      * Sets the name of the application that the event came from
      *
      * @param string $appName
-     * @return self
      */
-    public function setAppName(string $appName): self;
+    public function setAppName(string $appName);
 
     /**
      * Returns the application name

@@ -53,8 +53,6 @@ class Order extends AbstractTimeSeriesCheckoutEvent
     public const BRAINTREE = 'braintree';
     public const CREDITCARD = 'creditcard';
     public const PAYPAL_ACCOUNT = 'paypal_account';
-    public const EVENT_CATEGORY = 'checkout';
-    public const EVENT_ACTION = 'order_created';
 
     public function __construct()
     {
