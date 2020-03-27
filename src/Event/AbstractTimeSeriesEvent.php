@@ -37,7 +37,7 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventDataContainer
     public function __construct()
     {
         $this->setEventStart(new DateTime);
-        $this->setEventAction([$this->getEventCategory(), $this->getEventAction()]);
+        $this->setEventAction([$this->getEventActionCategory(), $this->getEventActionName()]);
     }
 
     /**
@@ -141,6 +141,16 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventDataContainer
     protected function setEventAction(array $action): self
     {
         return $this->setData('event.action', $action);
+    }
+
+    /**
+     * Returns the event action
+     *
+     * @return null|array
+     */
+    public function getEventAction(): ?array
+    {
+        return $this->getData('event.action');
     }
 
     /**

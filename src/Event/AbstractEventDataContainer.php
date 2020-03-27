@@ -31,7 +31,7 @@ abstract class AbstractEventDataContainer extends AbstractDataContainer implemen
      *
      * @return string
      */
-    abstract public function getEventCategory(): string;
+    abstract public function getEventActionCategory(): string;
 
     /**
      * Returns the name of the event.
@@ -43,7 +43,7 @@ abstract class AbstractEventDataContainer extends AbstractDataContainer implemen
      *
      * @return string
      */
-    abstract public function getEventAction(): string;
+    abstract public function getEventActionName(): string;
 
     /**
      * Sets the application name

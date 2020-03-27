@@ -40,7 +40,7 @@ class OrderInvoice extends AbstractTimeSeriesCheckoutEvent
     /**
      * {@inheritDoc}
      */
-    public function getEventAction(): string
+    public function getEventActionName(): string
     {
         return 'invoice_created';
     }

@@ -69,7 +69,7 @@ class Order extends AbstractTimeSeriesCheckoutEvent
     /**
      * {@inheritDoc}
      */
-    public function getEventAction(): string
+    public function getEventActionName(): string
     {
         return 'order_created';
     }

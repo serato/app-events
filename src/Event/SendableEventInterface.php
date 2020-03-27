@@ -18,7 +18,7 @@ interface SendableEventInterface
      *
      * @return string
      */
-    public function getEventCategory(): string;
+    public function getEventActionCategory(): string;
 
     /**
      * Returns the name of the event.
@@ -30,7 +30,7 @@ interface SendableEventInterface
      *
      * @return string
      */
-    public function getEventAction(): string;
+    public function getEventActionName(): string;
 
     /**
      * Sets the name of the application that the event came from

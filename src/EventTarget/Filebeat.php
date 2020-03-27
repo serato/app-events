@@ -34,7 +34,7 @@ class Filebeat extends AbstractEventTarget
      */
     protected function send(SendableEventInterface $event): void
     {
-        $this->logger->info($event->getEventCategory() . '.' . $event->getEventAction(), $event->get());
+        $this->logger->info($event->getEventActionCategory() . '.' . $event->getEventActionName(), $event->get());
     }
 
     /**

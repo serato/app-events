@@ -43,7 +43,7 @@ class Download extends AbstractTimeSeriesEvent
     /**
      * {@inheritdoc}
      */
-    public function getEventCategory(): string
+    public function getEventActionCategory(): string
     {
         return 'digital_asset';
     }
@@ -51,7 +51,7 @@ class Download extends AbstractTimeSeriesEvent
     /**
      * {@inheritdoc}
      */
-    public function getEventAction(): string
+    public function getEventActionName(): string
     {
         return 'download';
     }

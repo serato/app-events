@@ -15,7 +15,7 @@ abstract class AbstractTimeSeriesCheckoutEvent extends AbstractTimeSeriesEvent
     /**
      * {@inheritDoc}
      */
-    public function getEventCategory(): string
+    public function getEventActionCategory(): string
     {
         return 'checkout';
     }

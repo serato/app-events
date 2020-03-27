@@ -24,7 +24,7 @@ class Redirect extends AbstractTimeSeriesEvent
     /**
      * {@inheritdoc}
      */
-    public function getEventCategory(): string
+    public function getEventActionCategory(): string
     {
         return 'sera_to';
     }
@@ -32,7 +32,7 @@ class Redirect extends AbstractTimeSeriesEvent
     /**
      * {@inheritdoc}
      */
-    public function getEventAction(): string
+    public function getEventActionName(): string
     {
         return 'redirect';
     }
