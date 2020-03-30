@@ -23,8 +23,6 @@ class FilebeatTest extends AbstractTestCase
     {
         $event  = new Redirect;
         $event
-            # AbstractEventDataContainer
-            ->setAppName('My App')
             # AbstractTimeSeriesEvent
             ->setHttpReferrer('http://serato.com/dj')
             ->setClientIp('24.30.52.126')

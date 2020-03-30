@@ -16,8 +16,6 @@ class DownloadTest extends AbstractTestCase
 
         $event  = new Download;
         $event
-            # AbstractEventDataContainer
-            ->setAppName('My App')
             # AbstractTimeSeriesEvent
             ->setUserId('user-123')
             ->setClientIp('24.30.52.126')

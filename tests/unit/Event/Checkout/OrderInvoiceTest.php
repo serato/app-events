@@ -30,8 +30,6 @@ class OrderInvoiceTest extends AbstractTestCase
 
         $event = new OrderInvoice;
         $event
-            # AbstractEventDataContainer
-            ->setAppName('My Web app')
             # AbstractTimeSeriesEvent
             ->setEventId('InvoiceId-123')
             # OrderInvoice
