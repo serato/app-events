@@ -36,6 +36,7 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventDataContainer
 
     public function __construct()
     {
+        parent::__construct();
         $this->setEventStart(new DateTime);
         $this->setEventAction([$this->getEventActionCategory(), $this->getEventActionName()]);
     }
@@ -43,7 +44,7 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventDataContainer
     /**
      * Logs the event to the specified log target
      *
-     * @param AbstractEventTarget $logger
+     * @param AbstractEventTarget $target
      * @return void
      */
     public function send(AbstractEventTarget $target): void
@@ -59,9 +60,9 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventDataContainer
      * `client.user.id`
      *
      * @param string $userId
-     * @return self
+     * @return mixed
      */
-    public function setUserId(string $userId): self
+    public function setUserId(string $userId)
     {
         return $this->setData('client.user.id', $userId);
     }
@@ -74,9 +75,9 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventDataContainer
      * `http.request.referrer`
      *
      * @param string $referrer
-     * @return self
+     * @return mixed
      */
-    public function setHttpReferrer(string $referrer): self
+    public function setHttpReferrer(string $referrer)
     {
         return $this->setData('http.request.referrer', $referrer);
     }
@@ -89,9 +90,9 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventDataContainer
      * `client.ip`
      *
      * @param string $ip
-     * @return self
+     * @return mixed
      */
-    public function setClientIp(string $ip): self
+    public function setClientIp(string $ip)
     {
         return $this->setData('client.ip', $ip);
     }
@@ -104,9 +105,9 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventDataContainer
      * `user_agent.original`
      *
      * @param string $ua
-     * @return self
+     * @return mixed
      */
-    public function setUserAgent(string $ua): self
+    public function setUserAgent(string $ua)
     {
         return $this->setData('user_agent.original', $ua);
     }
@@ -121,9 +122,9 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventDataContainer
      * `event.id`
      *
      * @param string $id
-     * @return self
+     * @return mixed
      */
-    public function setEventId(string $id): self
+    public function setEventId(string $id)
     {
         return $this->setData('event.id', $id);
     }
@@ -136,9 +137,9 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventDataContainer
      * `event.action`
      *
      * @param array $action
-     * @return self
+     * @return mixed
      */
-    protected function setEventAction(array $action): self
+    protected function setEventAction(array $action)
     {
         return $this->setData('event.action', $action);
     }
@@ -161,9 +162,9 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventDataContainer
      * `event.start`
      *
      * @param DateTime $dt
-     * @return self
+     * @return mixed
      */
-    public function setEventStart(DateTime $dt): self
+    public function setEventStart(DateTime $dt)
     {
         return $this->setData('event.start', $dt->format(DateTime::ATOM));
     }
@@ -176,9 +177,9 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventDataContainer
      * `event.end`
      *
      * @param DateTime $dt
-     * @return self
+     * @return mixed
      */
-    public function setEventEnd(DateTime $dt): self
+    public function setEventEnd(DateTime $dt)
     {
         return $this->setData('event.end', $dt->format(DateTime::ATOM));
     }
@@ -193,9 +194,9 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventDataContainer
      * `event.outcome`
      *
      * @param string $outcome
-     * @return self
+     * @return mixed
      */
-    public function setEventOutcome(string $outcome): self
+    public function setEventOutcome(string $outcome)
     {
         $this->validateDataValue($outcome, [self::SUCCESS, self::FAILURE, self::UNKNOWN], __METHOD__);
         return $this->setData('event.outcome', $outcome);

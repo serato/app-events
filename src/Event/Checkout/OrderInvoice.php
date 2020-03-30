@@ -93,7 +93,7 @@ class OrderInvoice extends AbstractTimeSeriesCheckoutEvent
      * `amounts.tax`
      * `amounts.total`
      *
-     * @param array $orderItems
+     * @param array $items
      * @return self
      */
     public function setInvoiceItems(array $items): self

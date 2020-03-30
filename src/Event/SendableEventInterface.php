@@ -45,4 +45,11 @@ interface SendableEventInterface
      * @return string|null
      */
     public function getAppName(): ?string;
+
+    /**
+     * Returns the entire event data array
+     *
+     * @return array
+     */
+    public function get(): array;
 }

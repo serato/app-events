@@ -29,7 +29,6 @@ class OrderInvoiceTest extends AbstractTestCase
             ->setAmountsTotal(20);
 
         $event = new OrderInvoice;
-
         $event
             # AbstractEventDataContainer
             ->setAppName('My Web app')

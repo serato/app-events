@@ -83,7 +83,7 @@ class Download extends AbstractTimeSeriesEvent
      *
      * `<ROOT ATTR>.asset_download.key`
      *
-     * @param string $id
+     * @param string $key
      * @return self
      */
     public function setFileKey(string $key): self

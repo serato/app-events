@@ -99,13 +99,12 @@ class Order extends AbstractTimeSeriesCheckoutEvent
      *
      * `<ROOT ATTR>.checkout_order.interactive`
      *
-     * @param string $i
+     * @param bool $i
      * @return self
      */
     public function setOrderInteractive(bool $i): self
     {
-        return $this
-            ->setData($this->getEventDataRootAttribute() . '.interactive', $i);
+        return $this->setData($this->getEventDataRootAttribute() . '.interactive', $i);
     }
 
     /**
@@ -287,7 +286,7 @@ class Order extends AbstractTimeSeriesCheckoutEvent
      *
      * `<ROOT ATTR>.checkout_order.tax_rate`
      *
-     * @param string $rate
+     * @param float $rate
      * @return self
      */
     public function setTaxRate(float $rate): self

@@ -198,7 +198,7 @@ class OrderItem extends AbstractDataContainer
      *
      * `tax_rate`
      *
-     * @param string $rate
+     * @param float $rate
      * @return self
      */
     public function setTaxRate(float $rate): self
@@ -223,7 +223,7 @@ class OrderItem extends AbstractDataContainer
      *
      * `amounts.base`
      *
-     * @param string $amount
+     * @param float $amount
      * @return self
      */
     public function setAmountsBase(float $amount): self
@@ -248,7 +248,7 @@ class OrderItem extends AbstractDataContainer
      *
      * `amounts.discounts`
      *
-     * @param string $amount
+     * @param float $amount
      * @return self
      */
     public function setAmountsDiscounts(float $amount): self
@@ -273,7 +273,7 @@ class OrderItem extends AbstractDataContainer
      *
      * `amounts.tax`
      *
-     * @param string $amount
+     * @param float $amount
      * @return self
      */
     public function setAmountsTax(float $amount): self
@@ -298,7 +298,7 @@ class OrderItem extends AbstractDataContainer
      *
      * `amounts.total`
      *
-     * @param string $amount
+     * @param float $amount
      * @return self
      */
     public function setAmountsTotal(float $amount): self
@@ -324,7 +324,7 @@ class OrderItem extends AbstractDataContainer
      *
      * `promotions`
      *
-     * @param array $items
+     * @param array $promotions
      * @return self
      * @throws Exception
      */

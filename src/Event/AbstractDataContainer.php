@@ -49,10 +49,10 @@ abstract class AbstractDataContainer
      * Sets data to a specified path
      *
      * @param string $path
-     * @param [type] $data
-     * @return self
+     * @param mixed $item
+     * @return mixed
      */
-    protected function setData(string $path, $item): self
+    protected function setData(string $path, $item)
     {
         $multiItem = false;
         if (is_array($item)) {
@@ -213,7 +213,7 @@ abstract class AbstractDataContainer
         if (!in_array($val, $accepted)) {
             throw new InvalidDataValueException(
                 "Invalid value `" . $val . "` provided to " .
-                $paramName === null ? '' : "`" . $paramName . "` parameter in " .
+                is_null(null) ? '' : "`" . $paramName . "` parameter in " .
                 "method `" . $methodName . "`.\n" .
                 "Accepted values are `" . implode("`, `", $accepted) . "`."
             );

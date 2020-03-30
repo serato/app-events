@@ -229,7 +229,7 @@ class Authorization extends AbstractTimeSeriesEvent
      * `<ROOT ATTR>.license_authorization.authorization.host.os.family`
      *
      * @param string $os
-     * @return string
+     * @return self
      */
     public function setAuthorizationHostOs(string $os): self
     {
@@ -247,7 +247,7 @@ class Authorization extends AbstractTimeSeriesEvent
      * `<ROOT ATTR>.license_authorization.authorization.host.locale`
      *
      * @param string $locale
-     * @return string
+     * @return self
      */
     public function setAuthorizationHostLocale(string $locale): self
     {
@@ -359,7 +359,7 @@ class Authorization extends AbstractTimeSeriesEvent
      *
      * `<ROOT ATTR>.license_authorization.license.license_type.term`
      *
-     * @param string $term
+     * @param string $options
      * @return self
      */
     public function setLicenseTypeOptions(string $options): self

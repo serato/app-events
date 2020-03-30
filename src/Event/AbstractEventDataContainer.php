@@ -18,7 +18,7 @@ abstract class AbstractEventDataContainer extends AbstractDataContainer implemen
 {
     public function __construct()
     {
-        return $this->setData('event.kind', 'event');
+        $this->setData('event.kind', 'event');
     }
 
     /**
@@ -53,9 +53,9 @@ abstract class AbstractEventDataContainer extends AbstractDataContainer implemen
      * `labels.application`
      *
      * @param string $appName
-     * @return self
+     * @return mixed
      */
-    public function setAppName(string $appName): self
+    public function setAppName(string $appName)
     {
         return $this->setData('labels.application', $appName);
     }

@@ -40,7 +40,7 @@ class Filebeat extends AbstractEventTarget
     /**
      * Returns the PSR LoggerInterface instance
      *
-     * @return Logger
+     * @return LoggerInterface
      */
     public function getLogger(): LoggerInterface
     {
