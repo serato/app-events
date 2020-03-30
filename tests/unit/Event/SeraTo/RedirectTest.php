@@ -5,7 +5,6 @@ namespace Serato\AppEvents\Test\Event\SeraTo;
 
 use Serato\AppEvents\Test\AbstractTestCase;
 use Serato\AppEvents\Event\SeraTo\Redirect;
-use DateTime;
 
 class RedirectTest extends AbstractTestCase
 {
