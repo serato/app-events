@@ -1,0 +1,10 @@
+parameters:
+    level: 7
+    paths:
+        - %currentWorkingDirectory%/src
+        - %currentWorkingDirectory%/tests
+    includes:
+        - vendor/phpstan/phpstan-phpunit/extension.neon
+    # excludes_analyse:
+    #     - %currentWorkingDirectory%/tests/InvoiceMagicMethodsTest.php
+    #     - %currentWorkingDirectory%/tests/InvoiceItemMagicMethodsTest.php
