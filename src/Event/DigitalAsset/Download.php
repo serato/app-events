@@ -29,6 +29,10 @@ use Serato\AppEvents\Event\AbstractTimeSeriesEvent;
  */
 class Download extends AbstractTimeSeriesEvent
 {
+    public const RELEASE = 'release';
+    public const PUBLIC_BETA = 'publicbeta';
+    public const PRIVATE_BETA = 'privatebeta';
+
     public function __construct()
     {
         parent::__construct();
@@ -143,6 +147,12 @@ class Download extends AbstractTimeSeriesEvent
         string $version,
         ?string $name
     ): self {
+        $this->validateDataValue(
+            $releaseType,
+            [self::RELEASE, self::PUBLIC_BETA, self::PRIVATE_BETA],
+            __METHOD__,
+            'releaseType'
+        );
         $this->setData($this->getEventDataRootAttribute() . '.version', $this->getBuildNumberData($version));
 
         if ($resourceType === 'content-pack') {
@@ -157,10 +167,22 @@ class Download extends AbstractTimeSeriesEvent
             }
             $this->setData($this->getEventDataRootAttribute() . '.type', $type);
             $productFamily = $this->productShortNameToProductFamily($product);
-            $this->setData($this->getEventDataRootAttribute() . '.name', $productFamily . ' ' . $this->getVersioNumberRelease());
-            $this->setData($this->getEventDataRootAttribute() . '.application_installer.product_family', $productFamily);
-            $this->setData($this->getEventDataRootAttribute() . '.application_installer.os.platform', $this->getNormalizedOsPlatform($resourceType));
-            $this->setData($this->getEventDataRootAttribute() . '.application_installer.release_type', $releaseType);
+            $this->setData(
+                $this->getEventDataRootAttribute() . '.name',
+                $productFamily . ' ' . $this->getVersionNumberRelease()
+            );
+            $this->setData(
+                $this->getEventDataRootAttribute() . '.application_installer.product_family',
+                $productFamily
+            );
+            $this->setData(
+                $this->getEventDataRootAttribute() . '.application_installer.os.platform',
+                $this->getNormalizedOsPlatform($resourceType)
+            );
+            $this->setData(
+                $this->getEventDataRootAttribute() . '.application_installer.release_type',
+                $releaseType
+            );
         }
         return $this;
     }
@@ -173,7 +195,7 @@ class Download extends AbstractTimeSeriesEvent
      *
      * @return string|null
      */
-    public function getVersioNumberBuild(): ?string
+    public function getVersionNumberBuild(): ?string
     {
         return $this->getData($this->getEventDataRootAttribute() . '.version.build') === null ?
                 null :
@@ -188,7 +210,7 @@ class Download extends AbstractTimeSeriesEvent
      *
      * @return string|null
      */
-    public function getVersioNumberRelease(): ?string
+    public function getVersionNumberRelease(): ?string
     {
         return $this->getData($this->getEventDataRootAttribute() . '.version.release') === null ?
                 null :
@@ -200,7 +222,7 @@ class Download extends AbstractTimeSeriesEvent
      *
      * @return integer|null
      */
-    public function getVersioNumberInt(): ?int
+    public function getVersionNumberInt(): ?int
     {
         return $this->getData($this->getEventDataRootAttribute() . '.version.build_int') === null ?
                 null :

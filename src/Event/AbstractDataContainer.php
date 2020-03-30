@@ -54,8 +54,24 @@ abstract class AbstractDataContainer
      */
     protected function setData(string $path, $item): self
     {
+        $multiItem = false;
+        if (is_array($item)) {
+            foreach (array_keys($item) as $k) {
+                if (is_string($k)) {
+                    $multiItem = true;
+                    continue;
+                }
+            }
+        }
+        $pathArray = explode('.', $path);
         $this->pathedData[$path] = $item;
-        $this->set(explode('.', $path), $this->data, $item);
+        $this->set($pathArray, $this->data, $item);
+        if ($multiItem) {
+            foreach ($item as $k => $v) {
+                $this->pathedData[$path . '.' . $k] = $v;
+                $this->set(array_merge($pathArray, [$k]), $this->data, $v);
+            }
+        }
         return $this;
     }
 
@@ -188,14 +204,17 @@ abstract class AbstractDataContainer
      * @param mixed $val
      * @param array $accepted
      * @param string $methodName
+     * @param string|null $paramName
      * @return void
      * @throws InvalidDataValueException
      */
-    protected function validateDataValue($val, array $accepted, string $methodName): void
+    protected function validateDataValue($val, array $accepted, string $methodName, ?string $paramName = null): void
     {
         if (!in_array($val, $accepted)) {
             throw new InvalidDataValueException(
-                "Invalid value `" . $val . "` provided to method `" . $methodName . "`.\n" .
+                "Invalid value `" . $val . "` provided to " .
+                $paramName === null ? '' : "`" . $paramName . "` parameter in " .
+                "method `" . $methodName . "`.\n" .
                 "Accepted values are `" . implode("`, `", $accepted) . "`."
             );
         }
