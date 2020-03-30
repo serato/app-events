@@ -201,8 +201,13 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventDataContainer
         return $this->setData('event.outcome', $outcome);
     }
 
-    protected function getEventDataRootAttribute(): string
+    /**
+     * Returns the path to the root element that customs Serato-specific event data
+     *
+     * @return string
+     */
+    public function getEventDataRootAttribute(): string
     {
-        return $this->getEventDataRootAttribute() . '.event_data';
+        return 'serato.event_data';
     }
 }

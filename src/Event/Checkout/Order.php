@@ -340,11 +340,28 @@ class Order extends AbstractTimeSeriesCheckoutEvent
         return $this->setData($this->getEventDataRootAttribute() . '.payment.payment_instrument.type', $type);
     }
 
+    /**
+     * A human readable name for the payment instrument.
+     *
+     * Typically contains a portion of a credit card number for credit card payment instruments,
+     * or an email address for PayPal accounts.
+     *
+     * @param string $name
+     * @return self
+     */
     public function setPaymentInstrumentName(string $name): self
     {
         return $this->setData($this->getEventDataRootAttribute() . '.payment.payment_instrument.name', $name);
     }
-    
+
+    /**
+     * Sets the payment instrument transaction reference.
+     *
+     * This is an addition payment reference specific to the payment intstrument.
+     *
+     * @param string $ref
+     * @return self
+     */
     public function setPaymentInstrumentTransactionReference(string $ref): self
     {
         return $this->setData($this->getEventDataRootAttribute() . '.payment.payment_instrument.transaction_reference', $ref);
