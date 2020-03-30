@@ -140,7 +140,9 @@ class HostMachineUid
         if ($length !== null) {
             # Always include at least one storage ID, even if the string limit is exceeded
             while (strlen($hostId) > $length && substr_count($hostId, ' ') > 0) {
-                $hostId = substr($hostId, 0, strrpos($hostId, ' '));
+                if (strrpos($hostId, ' ') !== false) {
+                    $hostId = substr($hostId, 0, strrpos($hostId, ' '));
+                }
             }
         }
         return $hostId;
@@ -163,7 +165,9 @@ class HostMachineUid
         if ($length !== null) {
             # Always include at least one storage ID, even if the string limit is exceeded
             while (strlen($hostId) > $length && substr_count($hostId, self::FIELD_DELIMITER) > 1) {
-                $hostId = substr($hostId, 0, strrpos($hostId, self::FIELD_DELIMITER));
+                if (strrpos($hostId, self::FIELD_DELIMITER) !== false) {
+                    $hostId = substr($hostId, 0, strrpos($hostId, self::FIELD_DELIMITER));
+                }
             }
         }
         return $hostId;
@@ -254,7 +258,7 @@ class HostMachineUid
         }
 
         $sections = explode(self::FIELD_DELIMITER, $hostId);
-        $this->setSystemId(array_shift($sections));
+        $this->setSystemId(array_shift($sections) ?? '');
 
         foreach ($sections as $section) {
             if ($section === $this->getSystemId()) {
@@ -266,7 +270,7 @@ class HostMachineUid
                 # Storage ID can legitimately be empty string. In this case the self::match function
                 # is expected to match on the emptyness.
                 # So store a placeholder string so that represents the missing storage ID.
-                if ($section === '' || $section === null) {
+                if ($section === '') {
                     $section = self::EMPTY_STORAGEID_PLACEHOLDER;
                 }
 
@@ -336,7 +340,7 @@ class HostMachineUid
                 # Storage ID can legitimately be empty string. In this case the self::match function
                 # is expected to match on the emptyness.
                 # So store a placeholder string so that represents the missing storage ID.
-                if ($systemStoragePair[1] === '' || $systemStoragePair[1] === null) {
+                if ($systemStoragePair[1] === '') {
                     $systemStoragePair[1] = self::EMPTY_STORAGEID_PLACEHOLDER;
                 }
 
