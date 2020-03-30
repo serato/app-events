@@ -364,7 +364,10 @@ class Order extends AbstractTimeSeriesCheckoutEvent
      */
     public function setPaymentInstrumentTransactionReference(string $ref): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.payment.payment_instrument.transaction_reference', $ref);
+        return $this->setData(
+            $this->getEventDataRootAttribute() . '.payment.payment_instrument.transaction_reference',
+            $ref
+        );
     }
 
     /**

@@ -4,11 +4,6 @@ declare(strict_types=1);
 namespace Serato\AppEvents\Test;
 
 use PHPUnit\Framework\TestCase;
-// use Aws\Sdk as AwsSdk;
-// use Aws\MockHandler as AwsMockHandler;
-// use Serato\SwsSdk\Sdk as SwsSdk;
-// use GuzzleHttp\Handler\MockHandler;
-// use GuzzleHttp\HandlerStack;
 
 abstract class AbstractTestCase extends TestCase
 {

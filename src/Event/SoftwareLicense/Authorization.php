@@ -122,7 +122,10 @@ class Authorization extends AbstractTimeSeriesEvent
      */
     public function setAuthorizationCommittedAt(DateTime $dt): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.authorization.comitted_at', $dt->format(DateTime::ATOM));
+        return $this->setData(
+            $this->getEventDataRootAttribute() . '.authorization.comitted_at',
+            $dt->format(DateTime::ATOM)
+        );
     }
 
     /**
@@ -454,7 +457,10 @@ class Authorization extends AbstractTimeSeriesEvent
      */
     public function setLicenseProductCreatedAt(DateTime $dt): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.license.product.created_at', $dt->format(DateTime::ATOM));
+        return $this->setData(
+            $this->getEventDataRootAttribute() . '.license.product.created_at',
+            $dt->format(DateTime::ATOM)
+        );
     }
 
     /**
