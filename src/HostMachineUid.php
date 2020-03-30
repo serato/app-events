@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Serato\EventLog;
+namespace Serato\AppEvents;
 
 use Serato\AppEvents\Exception\InvalidHostMachineUidException;
 

@@ -114,7 +114,7 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventDataContainer
     /**
      * Sets the unique event ID.
      *
-     * Note: This value also becomes the documented ID when injested into Elasticsearch.
+     * Note: This value also becomes the document ID when injested into Elasticsearch.
      *
      * Sets the following field(s):
      *

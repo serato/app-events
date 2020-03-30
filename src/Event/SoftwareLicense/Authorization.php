@@ -79,6 +79,7 @@ class Authorization extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
+     * `event.id`
      * `<ROOT ATTR>.license_authorization.authorization.id`
      *
      * @param string $id
@@ -86,7 +87,9 @@ class Authorization extends AbstractTimeSeriesEvent
      */
     public function setAuthorizationId(string $id): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.authorization.id', $id);
+        return $this
+            ->setEventId($id)
+            ->setData($this->getEventDataRootAttribute() . '.authorization.id', $id);
     }
 
     /**
@@ -182,9 +185,18 @@ class Authorization extends AbstractTimeSeriesEvent
         try {
             $hostMachineUid = new HostMachineUid($hostId);
             return $this
-                ->setData($this->getEventDataRootAttribute() . '.authorization.host.machine.id.raw', (string)$hostMachineUid)
-                ->setData($this->getEventDataRootAttribute() . '.authorization.host.machine.id.canonical', $hostMachineUid->getCanonicalHostId())
-                ->setData($this->getEventDataRootAttribute() . '.authorization.host.machine.id.system_id', $hostMachineUid->getSystemId());
+                ->setData(
+                    $this->getEventDataRootAttribute() . '.authorization.host.machine.id.raw',
+                    (string)$hostMachineUid
+                )
+                ->setData(
+                    $this->getEventDataRootAttribute() . '.authorization.host.machine.id.canonical',
+                    $hostMachineUid->getCanonicalHostId()
+                )
+                ->setData(
+                    $this->getEventDataRootAttribute() . '.authorization.host.machine.id.system_id',
+                    $hostMachineUid->getSystemId()
+                );
         } catch (InvalidHostMachineUidException $e) {
             // Ignore invalid values
         }
@@ -218,7 +230,10 @@ class Authorization extends AbstractTimeSeriesEvent
      */
     public function setAuthorizationHostOs(string $os): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.authorization.host.os.family', $this->getNormalizedOsPlatform($os));
+        return $this->setData(
+            $this->getEventDataRootAttribute() . '.authorization.host.os.family',
+            $this->getNormalizedOsPlatform($os)
+        );
     }
 
     /**
@@ -242,25 +257,36 @@ class Authorization extends AbstractTimeSeriesEvent
      * Sets the following field(s):
      *
      * `<ROOT ATTR>.license_authorization.authorization.host.application.name`
+     *
+     * @param string $name
+     * @return self
+     */
+    public function setAuthorizationHostApplicationName(string $name): self
+    {
+        return $this->setData(
+            $this->getEventDataRootAttribute() . '.authorization.host.application.name',
+            $this->productShortNameToProductFamily($name)
+        );
+    }
+
+    /**
+     * Sets authorization host application version
+     *
+     * Sets the following field(s):
+     *
      * `<ROOT ATTR>.license_authorization.authorization.host.application.version.release`
      * `<ROOT ATTR>.license_authorization.authorization.host.application.version.build`
      * `<ROOT ATTR>.license_authorization.authorization.host.application.version.build_int`
      *
-     * @param string $appName
-     * @param string $appVersion
+     * @param string $version
      * @return self
      */
-    public function setAuthorizationHostApplication(string $appName, string $appVersion): self
+    public function setAuthorizationHostApplicationVersion(string $version): self
     {
-        $buildNumData = $this->getBuildNumberData($appVersion);
-        return $this
-            ->setData(
-                $this->getEventDataRootAttribute() . '.authorization.host.application.name',
-                $this->productShortNameToProductFamily($appName)
-            )
-            ->setData($this->getEventDataRootAttribute() . '.authorization.host.application.version.release', $buildNumData['release'])
-            ->setData($this->getEventDataRootAttribute() . '.authorization.host.application.version.build', $buildNumData['build'])
-            ->setData($this->getEventDataRootAttribute() . '.authorization.host.application.version.build_int', $buildNumData['build_int']);
+        return $this->setData(
+            $this->getEventDataRootAttribute() . '.authorization.host.application.version',
+            $this->getBuildNumberData($version)
+        );
     }
 
     /**
@@ -336,7 +362,7 @@ class Authorization extends AbstractTimeSeriesEvent
     public function setLicenseTypeOptions(string $options): self
     {
         $this->validateDataValue(
-            $gateway,
+            $options,
             [self::PERMANENT, self::TIMELIMITED, self::SUBSCRIPTION, self::TRIAL],
             __METHOD__
         );
