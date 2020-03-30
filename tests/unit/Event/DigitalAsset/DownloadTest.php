@@ -20,7 +20,6 @@ class DownloadTest extends AbstractTestCase
             ->setAppName('My App')
             # AbstractTimeSeriesEvent
             ->setUserId('user-123')
-            ### ->setHttpReferrer()
             ->setClientIp('24.30.52.126')
             ->setUserAgent(
                 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' .
@@ -28,8 +27,6 @@ class DownloadTest extends AbstractTestCase
             )
             ->setEventId('dl-1234')
             ->setEventStart(new DateTime)
-            ### ->setEventEnd()
-            ### ->setEventOutcome()
             # Download
             ->setFileId('file-789')
             ->setFileKey('/path/installer.dmg')
