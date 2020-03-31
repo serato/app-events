@@ -16,7 +16,6 @@ class AuthorizationTest extends AbstractTestCase
             # AbstractTimeSeriesEvent
             ->setUserId('user-123')
             ->setClientIp('24.30.52.126')
-            ### ->setEventId()
             ->setEventEnd(new DateTime)
             ->setEventOutcome(Authorization::SUCCESS)
             # Authorization
