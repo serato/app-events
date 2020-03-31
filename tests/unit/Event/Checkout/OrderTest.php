@@ -19,8 +19,6 @@ class OrderTest extends AbstractTestCase
         $event = new Order;
 
         $event
-            # AbstractEventDataContainer
-            ->setAppName('My App')
             # AbstractTimeSeriesEvent
             ->setUserId('user-123')
             ->setClientIp('24.30.52.126')
@@ -118,7 +116,6 @@ class OrderTest extends AbstractTestCase
     {
         $inv = new OrderInvoice;
         $inv
-            ->setAppName('My Web app')
             ->setEventId('InvoiceId-123')
             ->setId('InvoiceId-123')
             ->setDebtorCode(OrderInvoice::WEBC001)

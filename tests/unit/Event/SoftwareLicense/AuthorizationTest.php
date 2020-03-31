@@ -13,12 +13,9 @@ class AuthorizationTest extends AbstractTestCase
     {
         $event  = new Authorization;
         $event
-            # AbstractEventDataContainer
-            ->setAppName('My App')
             # AbstractTimeSeriesEvent
             ->setUserId('user-123')
             ->setClientIp('24.30.52.126')
-            ### ->setEventId()
             ->setEventEnd(new DateTime)
             ->setEventOutcome(Authorization::SUCCESS)
             # Authorization
