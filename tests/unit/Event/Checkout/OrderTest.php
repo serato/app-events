@@ -34,6 +34,7 @@ class OrderTest extends AbstractTestCase
             ->setCartId('cart-456')
             ->setOrderUserId('user-123')
             ->setUserEmailAddress('test@email.net')
+            ->setUserBusinessName('Mee Corp')
             ->setUserFirstName('Me')
             ->setUserLastName('Too')
             ->setUserBillingAddress1('123 My Street')
