@@ -21,6 +21,7 @@ use Exception;
  * `<ROOT ATTR>.checkout_order.cart_id`
  * `<ROOT ATTR>.checkout_order.user.id`
  * `<ROOT ATTR>.checkout_order.user.email_address`
+ * `<ROOT ATTR>.checkout_order.user.organization_name`
  * `<ROOT ATTR>.checkout_order.user.first_name`
  * `<ROOT ATTR>.checkout_order.user.last_name`
  * `<ROOT ATTR>.checkout_order.user.billing_address.address_1`
@@ -154,6 +155,21 @@ class Order extends AbstractTimeSeriesCheckoutEvent
     public function setUserEmailAddress(string $emailAddress): self
     {
         return $this->setData($this->getEventDataRootAttribute() . '.user.email_address', $emailAddress);
+    }
+
+    /**
+     * Sets the order user organization name.
+     *
+     * Sets the following field(s):
+     *
+     * `<ROOT ATTR>.checkout_order.user.organization_name`
+     *
+     * @param string $name
+     * @return self
+     */
+    public function setUserOrganizationName(string $name): self
+    {
+        return $this->setData($this->getEventDataRootAttribute() . '.user.organization_name', $name);
     }
 
     /**
