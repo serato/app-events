@@ -28,7 +28,8 @@ use Serato\AppEvents\EventTarget\AbstractEventTarget;
  */
 abstract class AbstractTimeSeriesEvent extends AbstractEventDataContainer
 {
-    private const ROOT_ATTR = 'serato';
+    # The path to the root element that contains Serato-specific event data
+    private const ROOT_EVENT_ATTR = 'serato.event_data';
 
     public const SUCCESS = 'success';
     public const FAILURE = 'failure';
@@ -203,12 +204,25 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventDataContainer
     }
 
     /**
-     * Returns the path to the root element that customs Serato-specific event data
+     * Returns data for a specified path under the root event attribute
      *
-     * @return string
+     * @param string $path
+     * @return null|mixed
      */
-    public function getEventDataRootAttribute(): string
+    public function getEventRootData(string $path)
     {
-        return 'serato.event_data';
+        return $this->getData(self::ROOT_EVENT_ATTR . '.' . $path);
+    }
+
+    /**
+     * Sets data under the root event attribute
+     *
+     * @param string $path
+     * @param mixed $item
+     * @return mixed
+     */
+    protected function setEventRootAttributeData(string $path, $item)
+    {
+        return $this->setData(self::ROOT_EVENT_ATTR . '.' . $path, $item);
     }
 }

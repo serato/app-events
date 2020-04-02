@@ -16,33 +16,33 @@ use Exception;
  *
  * Sets the following fields:
  *
- * `<ROOT ATTR>.checkout_order.id`
- * `<ROOT ATTR>.checkout_order.interactive`
- * `<ROOT ATTR>.checkout_order.cart_id`
- * `<ROOT ATTR>.checkout_order.user.id`
- * `<ROOT ATTR>.checkout_order.user.email_address`
- * `<ROOT ATTR>.checkout_order.user.organization_name`
- * `<ROOT ATTR>.checkout_order.user.first_name`
- * `<ROOT ATTR>.checkout_order.user.last_name`
- * `<ROOT ATTR>.checkout_order.user.billing_address.address_1`
- * `<ROOT ATTR>.checkout_order.user.billing_address.address_2`
- * `<ROOT ATTR>.checkout_order.user.billing_address.city_name`
- * `<ROOT ATTR>.checkout_order.user.billing_address.region_name`
- * `<ROOT ATTR>.checkout_order.user.billing_address.postcode`
- * `<ROOT ATTR>.checkout_order.user.billing_address.country_iso_code`
- * `<ROOT ATTR>.checkout_order.tax_rate`
+ * `<ROOT ATTR>.id`
+ * `<ROOT ATTR>.interactive`
+ * `<ROOT ATTR>.cart_id`
+ * `<ROOT ATTR>.user.id`
+ * `<ROOT ATTR>.user.email_address`
+ * `<ROOT ATTR>.user.organization_name`
+ * `<ROOT ATTR>.user.first_name`
+ * `<ROOT ATTR>.user.last_name`
+ * `<ROOT ATTR>.user.billing_address.address_1`
+ * `<ROOT ATTR>.user.billing_address.address_2`
+ * `<ROOT ATTR>.user.billing_address.city_name`
+ * `<ROOT ATTR>.user.billing_address.region_name`
+ * `<ROOT ATTR>.user.billing_address.postcode`
+ * `<ROOT ATTR>.user.billing_address.country_iso_code`
+ * `<ROOT ATTR>.tax_rate`
  *
  * Additionally, the `CheckoutOrder::setOrderItems` method takes an array of
  * `\Serato\AppEvents\Event\Checkout\OrderItem` objects and copies their data to:
  *
- * `<ROOT ATTR>.checkout_order.items`
+ * `<ROOT ATTR>.items`
  *
  *  The same method iterates over the array and calculates values for the following fields:
  *
- * `<ROOT ATTR>.checkout_order.amounts.base`
- * `<ROOT ATTR>.checkout_order.amounts.discounts`
- * `<ROOT ATTR>.checkout_order.amounts.tax`
- * `<ROOT ATTR>.checkout_order.amounts.total`
+ * `<ROOT ATTR>.amounts.base`
+ * `<ROOT ATTR>.amounts.discounts`
+ * `<ROOT ATTR>.amounts.tax`
+ * `<ROOT ATTR>.amounts.total`
  */
 class Order extends AbstractTimeSeriesCheckoutEvent
 {
@@ -50,10 +50,10 @@ class Order extends AbstractTimeSeriesCheckoutEvent
     {
         parent::__construct();
         $this
-            ->setData($this->getEventDataRootAttribute() . '.amounts.base', 0)
-            ->setData($this->getEventDataRootAttribute() . '.amounts.discounts', 0)
-            ->setData($this->getEventDataRootAttribute() . '.amounts.tax', 0)
-            ->setData($this->getEventDataRootAttribute() . '.amounts.total', 0);
+            ->setEventRootAttributeData('amounts.base', 0)
+            ->setEventRootAttributeData('amounts.discounts', 0)
+            ->setEventRootAttributeData('amounts.tax', 0)
+            ->setEventRootAttributeData('amounts.total', 0);
     }
 
     /**
@@ -70,7 +70,7 @@ class Order extends AbstractTimeSeriesCheckoutEvent
      * Sets the following field(s):
      *
      * `event.id`
-     * `<ROOT ATTR>.checkout_order.id`
+     * `<ROOT ATTR>.id`
      *
      * @param string $id
      * @return self
@@ -79,7 +79,7 @@ class Order extends AbstractTimeSeriesCheckoutEvent
     {
         return $this
             ->setEventId($id)
-            ->setData($this->getEventDataRootAttribute() . '.id', $id);
+            ->setEventRootAttributeData('id', $id);
     }
 
     /**
@@ -87,14 +87,14 @@ class Order extends AbstractTimeSeriesCheckoutEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.checkout_order.interactive`
+     * `<ROOT ATTR>.interactive`
      *
      * @param bool $i
      * @return self
      */
     public function setOrderInteractive(bool $i): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.interactive', $i);
+        return $this->setEventRootAttributeData('interactive', $i);
     }
 
     /**
@@ -102,14 +102,14 @@ class Order extends AbstractTimeSeriesCheckoutEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.checkout_order.cart_id`
+     * `<ROOT ATTR>.cart_id`
      *
      * @param string $id
      * @return self
      */
     public function setCartId(string $id): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.cart_id', $id);
+        return $this->setEventRootAttributeData('cart_id', $id);
     }
 
     /**
@@ -121,14 +121,14 @@ class Order extends AbstractTimeSeriesCheckoutEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.checkout_order.user.id`
+     * `<ROOT ATTR>.user.id`
      *
      * @param string $id
      * @return self
      */
     public function setOrderUserId(string $id): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.user.id', $id);
+        return $this->setEventRootAttributeData('user.id', $id);
     }
 
     /**
@@ -136,14 +136,14 @@ class Order extends AbstractTimeSeriesCheckoutEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.checkout_order.user.email_address`
+     * `<ROOT ATTR>.user.email_address`
      *
      * @param string $emailAddress
      * @return self
      */
     public function setUserEmailAddress(string $emailAddress): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.user.email_address', $emailAddress);
+        return $this->setEventRootAttributeData('user.email_address', $emailAddress);
     }
 
     /**
@@ -151,14 +151,14 @@ class Order extends AbstractTimeSeriesCheckoutEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.checkout_order.user.organization_name`
+     * `<ROOT ATTR>.user.organization_name`
      *
      * @param string $name
      * @return self
      */
     public function setUserOrganizationName(string $name): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.user.organization_name', $name);
+        return $this->setEventRootAttributeData('user.organization_name', $name);
     }
 
     /**
@@ -166,14 +166,14 @@ class Order extends AbstractTimeSeriesCheckoutEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.checkout_order.user.first_name`
+     * `<ROOT ATTR>.user.first_name`
      *
      * @param string $firstName
      * @return self
      */
     public function setUserFirstName(string $firstName): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.user.first_name', $firstName);
+        return $this->setEventRootAttributeData('user.first_name', $firstName);
     }
 
     /**
@@ -181,14 +181,14 @@ class Order extends AbstractTimeSeriesCheckoutEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.checkout_order.user.last_name`
+     * `<ROOT ATTR>.user.last_name`
      *
      * @param string $lastName
      * @return self
      */
     public function setUserLastName(string $lastName): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.user.last_name', $lastName);
+        return $this->setEventRootAttributeData('user.last_name', $lastName);
     }
 
     /**
@@ -196,14 +196,14 @@ class Order extends AbstractTimeSeriesCheckoutEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.checkout_order.user.billing_address.address_1`
+     * `<ROOT ATTR>.user.billing_address.address_1`
      *
      * @param string $address1
      * @return self
      */
     public function setUserBillingAddress1(string $address1): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.user.billing_address.address_1', $address1);
+        return $this->setEventRootAttributeData('user.billing_address.address_1', $address1);
     }
 
     /**
@@ -211,14 +211,14 @@ class Order extends AbstractTimeSeriesCheckoutEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.checkout_order.user.billing_address.address_2`
+     * `<ROOT ATTR>.user.billing_address.address_2`
      *
      * @param string $address2
      * @return self
      */
     public function setUserBillingAddress2(string $address2): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.user.billing_address.address_2', $address2);
+        return $this->setEventRootAttributeData('user.billing_address.address_2', $address2);
     }
 
     /**
@@ -226,14 +226,14 @@ class Order extends AbstractTimeSeriesCheckoutEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.checkout_order.user.billing_address.city_name`
+     * `<ROOT ATTR>.user.billing_address.city_name`
      *
      * @param string $city
      * @return self
      */
     public function setUserBillingAddressCity(string $city): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.user.billing_address.city_name', $city);
+        return $this->setEventRootAttributeData('user.billing_address.city_name', $city);
     }
 
     /**
@@ -241,14 +241,14 @@ class Order extends AbstractTimeSeriesCheckoutEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.checkout_order.user.billing_address.region_name`
+     * `<ROOT ATTR>.user.billing_address.region_name`
      *
      * @param string $region
      * @return self
      */
     public function setUserBillingAddressRegion(string $region): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.user.billing_address.region_name', $region);
+        return $this->setEventRootAttributeData('user.billing_address.region_name', $region);
     }
 
     /**
@@ -256,14 +256,14 @@ class Order extends AbstractTimeSeriesCheckoutEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.checkout_order.user.billing_address.postcode`
+     * `<ROOT ATTR>.user.billing_address.postcode`
      *
      * @param string $postcode
      * @return self
      */
     public function setUserBillingAddressPostcode(string $postcode): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.user.billing_address.postcode', $postcode);
+        return $this->setEventRootAttributeData('user.billing_address.postcode', $postcode);
     }
 
     /**
@@ -271,17 +271,14 @@ class Order extends AbstractTimeSeriesCheckoutEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.checkout_order.user.billing_address.country_iso_code`
+     * `<ROOT ATTR>.user.billing_address.country_iso_code`
      *
      * @param string $countryCode
      * @return self
      */
     public function setUserBillingAddressCountryCode(string $countryCode): self
     {
-        return $this->setData(
-            $this->getEventDataRootAttribute() . '.user.billing_address.country_iso_code',
-            $countryCode
-        );
+        return $this->setEventRootAttributeData('user.billing_address.country_iso_code', $countryCode);
     }
 
     /**
@@ -289,14 +286,14 @@ class Order extends AbstractTimeSeriesCheckoutEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.checkout_order.tax_rate`
+     * `<ROOT ATTR>.tax_rate`
      *
      * @param float $rate
      * @return self
      */
     public function setTaxRate(float $rate): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.tax_rate', $rate);
+        return $this->setEventRootAttributeData('tax_rate', $rate);
     }
 
     /**
@@ -307,11 +304,11 @@ class Order extends AbstractTimeSeriesCheckoutEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.checkout_order.items`
-     * `<ROOT ATTR>.checkout_order.amounts.base`
-     * `<ROOT ATTR>.checkout_order.amounts.discounts`
-     * `<ROOT ATTR>.checkout_order.amounts.tax`
-     * `<ROOT ATTR>.checkout_order.amounts.total`
+     * `<ROOT ATTR>.items`
+     * `<ROOT ATTR>.amounts.base`
+     * `<ROOT ATTR>.amounts.discounts`
+     * `<ROOT ATTR>.amounts.tax`
+     * `<ROOT ATTR>.amounts.total`
      *
      * @param array $orderItems
      * @return self
@@ -344,11 +341,11 @@ class Order extends AbstractTimeSeriesCheckoutEvent
         }
 
         return $this
-            ->setData($this->getEventDataRootAttribute() . '.items', $data)
-            ->setData($this->getEventDataRootAttribute() . '.amounts.base', $base)
-            ->setData($this->getEventDataRootAttribute() . '.amounts.discounts', $discounts)
-            ->setData($this->getEventDataRootAttribute() . '.amounts.tax', $tax)
-            ->setData($this->getEventDataRootAttribute() . '.amounts.total', $total);
+            ->setEventRootAttributeData('items', $data)
+            ->setEventRootAttributeData('amounts.base', $base)
+            ->setEventRootAttributeData('amounts.discounts', $discounts)
+            ->setEventRootAttributeData('amounts.tax', $tax)
+            ->setEventRootAttributeData('amounts.total', $total);
     }
 
     /**
@@ -357,7 +354,7 @@ class Order extends AbstractTimeSeriesCheckoutEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.checkout_order.invoices`
+     * `<ROOT ATTR>.invoices`
      *
      * @param array $orderInvoices
      * @return self
@@ -373,6 +370,6 @@ class Order extends AbstractTimeSeriesCheckoutEvent
             }
             $data[] = $invoice->get();
         }
-        return $this->setData($this->getEventDataRootAttribute() . '.invoices', $data);
+        return $this->setEventRootAttributeData('invoices', $data);
     }
 }

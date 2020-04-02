@@ -16,33 +16,33 @@ use Serato\AppEvents\Exception\InvalidHostMachineUidException;
  *
  * Sets the following fields:
  *
- * `<ROOT ATTR>.license_authorization.authorization.id`
- * `<ROOT ATTR>.license_authorization.authorization.valid_to`
- * `<ROOT ATTR>.license_authorization.authorization.comitted_at`
- * `<ROOT ATTR>.license_authorization.authorization.result_code`
- * `<ROOT ATTR>.license_authorization.authorization.action`
- * `<ROOT ATTR>.license_authorization.authorization.host.machine.id.raw`
- * `<ROOT ATTR>.license_authorization.authorization.host.machine.id.canonical`
- * `<ROOT ATTR>.license_authorization.authorization.host.machine.id.system_id`
- * `<ROOT ATTR>.license_authorization.authorization.host.machine.name`
- * `<ROOT ATTR>.license_authorization.authorization.host.os.family`
- * `<ROOT ATTR>.license_authorization.authorization.host.locale`
- * `<ROOT ATTR>.license_authorization.authorization.host.application.name`
- * `<ROOT ATTR>.license_authorization.authorization.host.application.version.release`
- * `<ROOT ATTR>.license_authorization.authorization.host.application.version.build`
- * `<ROOT ATTR>.license_authorization.authorization.host.application.version.build_int`
- * `<ROOT ATTR>.license_authorization.license.id`
- * `<ROOT ATTR>.license_authorization.license.valid_to`
- * `<ROOT ATTR>.license_authorization.license.license_type.id`
- * `<ROOT ATTR>.license_authorization.license.license_type.name`
- * `<ROOT ATTR>.license_authorization.license.license_type.term`
- * `<ROOT ATTR>.license_authorization.license.license_type.rlm_schema.name`
- * `<ROOT ATTR>.license_authorization.license.license_type.rlm_schema.version`
- * `<ROOT ATTR>.license_authorization.license.user.id`
- * `<ROOT ATTR>.license_authorization.license.product.id`
- * `<ROOT ATTR>.license_authorization.license.product.created_at`
- * `<ROOT ATTR>.license_authorization.license.product.product_type.id`
- * `<ROOT ATTR>.license_authorization.license.product.product_type.name`
+ * `<ROOT ATTR>.authorization.id`
+ * `<ROOT ATTR>.authorization.valid_to`
+ * `<ROOT ATTR>.authorization.comitted_at`
+ * `<ROOT ATTR>.authorization.result_code`
+ * `<ROOT ATTR>.authorization.action`
+ * `<ROOT ATTR>.authorization.host.machine.id.raw`
+ * `<ROOT ATTR>.authorization.host.machine.id.canonical`
+ * `<ROOT ATTR>.authorization.host.machine.id.system_id`
+ * `<ROOT ATTR>.authorization.host.machine.name`
+ * `<ROOT ATTR>.authorization.host.os.family`
+ * `<ROOT ATTR>.authorization.host.locale`
+ * `<ROOT ATTR>.authorization.host.application.name`
+ * `<ROOT ATTR>.authorization.host.application.version.release`
+ * `<ROOT ATTR>.authorization.host.application.version.build`
+ * `<ROOT ATTR>.authorization.host.application.version.build_int`
+ * `<ROOT ATTR>.license.id`
+ * `<ROOT ATTR>.license.valid_to`
+ * `<ROOT ATTR>.license.license_type.id`
+ * `<ROOT ATTR>.license.license_type.name`
+ * `<ROOT ATTR>.license.license_type.term`
+ * `<ROOT ATTR>.license.license_type.rlm_schema.name`
+ * `<ROOT ATTR>.license.license_type.rlm_schema.version`
+ * `<ROOT ATTR>.license.user.id`
+ * `<ROOT ATTR>.license.product.id`
+ * `<ROOT ATTR>.license.product.created_at`
+ * `<ROOT ATTR>.license.product.product_type.id`
+ * `<ROOT ATTR>.license.product.product_type.name`
  */
 class Authorization extends AbstractTimeSeriesEvent
 {
@@ -80,7 +80,7 @@ class Authorization extends AbstractTimeSeriesEvent
      * Sets the following field(s):
      *
      * `event.id`
-     * `<ROOT ATTR>.license_authorization.authorization.id`
+     * `<ROOT ATTR>.authorization.id`
      *
      * @param string $id
      * @return self
@@ -89,7 +89,7 @@ class Authorization extends AbstractTimeSeriesEvent
     {
         return $this
             ->setEventId($id)
-            ->setData($this->getEventDataRootAttribute() . '.authorization.id', $id);
+            ->setEventRootAttributeData('authorization.id', $id);
     }
 
     /**
@@ -97,17 +97,14 @@ class Authorization extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.license_authorization.authorization.valid_to`
+     * `<ROOT ATTR>.authorization.valid_to`
      *
      * @param DateTime $dt
      * @return self
      */
     public function setAuthorizationValidTo(DateTime $dt): self
     {
-        return $this->setData(
-            $this->getEventDataRootAttribute() . '.authorization.valid_to',
-            $dt->format(DateTime::ATOM)
-        );
+        return $this->setEventRootAttributeData('authorization.valid_to', $dt->format(DateTime::ATOM));
     }
 
     /**
@@ -115,17 +112,14 @@ class Authorization extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.license_authorization.authorization.comitted_at`
+     * `<ROOT ATTR>.authorization.comitted_at`
      *
      * @param DateTime $dt
      * @return self
      */
     public function setAuthorizationCommittedAt(DateTime $dt): self
     {
-        return $this->setData(
-            $this->getEventDataRootAttribute() . '.authorization.comitted_at',
-            $dt->format(DateTime::ATOM)
-        );
+        return $this->setEventRootAttributeData('authorization.comitted_at', $dt->format(DateTime::ATOM));
     }
 
     /**
@@ -133,14 +127,14 @@ class Authorization extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.license_authorization.authorization.result_code`
+     * `<ROOT ATTR>.authorization.result_code`
      *
      * @param integer $code
      * @return self
      */
     public function setAuthorizationResultCode(int $code): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.authorization.result_code', $code);
+        return $this->setEventRootAttributeData('authorization.result_code', $code);
     }
 
     /**
@@ -150,7 +144,7 @@ class Authorization extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.license_authorization.authorization.action`
+     * `<ROOT ATTR>.authorization.action`
      *
      * @param string $action
      * @return self
@@ -165,7 +159,7 @@ class Authorization extends AbstractTimeSeriesEvent
         if ($action == 'De-authorize') {
             $v = 'deactivate';
         };
-        return $this->setData($this->getEventDataRootAttribute() . '.authorization.action', $v);
+        return $this->setEventRootAttributeData('authorization.action', $v);
     }
 
     /**
@@ -176,9 +170,9 @@ class Authorization extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.license_authorization.authorization.host.machine.id.raw`
-     * `<ROOT ATTR>.license_authorization.authorization.host.machine.id.canonical`
-     * `<ROOT ATTR>.license_authorization.authorization.host.machine.id.system_id`
+     * `<ROOT ATTR>.authorization.host.machine.id.raw`
+     * `<ROOT ATTR>.authorization.host.machine.id.canonical`
+     * `<ROOT ATTR>.authorization.host.machine.id.system_id`
      *
      * @param string $hostId
      * @return self
@@ -188,16 +182,16 @@ class Authorization extends AbstractTimeSeriesEvent
         try {
             $hostMachineUid = new HostMachineUid($hostId);
             return $this
-                ->setData(
-                    $this->getEventDataRootAttribute() . '.authorization.host.machine.id.raw',
+                ->setEventRootAttributeData(
+                    'authorization.host.machine.id.raw',
                     (string)$hostMachineUid
                 )
-                ->setData(
-                    $this->getEventDataRootAttribute() . '.authorization.host.machine.id.canonical',
+                ->setEventRootAttributeData(
+                    'authorization.host.machine.id.canonical',
                     $hostMachineUid->getCanonicalHostId()
                 )
-                ->setData(
-                    $this->getEventDataRootAttribute() . '.authorization.host.machine.id.system_id',
+                ->setEventRootAttributeData(
+                    'authorization.host.machine.id.system_id',
                     $hostMachineUid->getSystemId()
                 );
         } catch (InvalidHostMachineUidException $e) {
@@ -211,14 +205,14 @@ class Authorization extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.license_authorization.authorization.host.machine.name`
+     * `<ROOT ATTR>.authorization.host.machine.name`
      *
      * @param string $name
      * @return self
      */
     public function setAuthorizationHostName(string $name): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.authorization.host.machine.name', $name);
+        return $this->setEventRootAttributeData('authorization.host.machine.name', $name);
     }
 
     /**
@@ -226,15 +220,15 @@ class Authorization extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.license_authorization.authorization.host.os.family`
+     * `<ROOT ATTR>.authorization.host.os.family`
      *
      * @param string $os
      * @return self
      */
     public function setAuthorizationHostOs(string $os): self
     {
-        return $this->setData(
-            $this->getEventDataRootAttribute() . '.authorization.host.os.family',
+        return $this->setEventRootAttributeData(
+            'authorization.host.os.family',
             $this->getNormalizedOsPlatform($os)
         );
     }
@@ -244,14 +238,14 @@ class Authorization extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.license_authorization.authorization.host.locale`
+     * `<ROOT ATTR>.authorization.host.locale`
      *
      * @param string $locale
      * @return self
      */
     public function setAuthorizationHostLocale(string $locale): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.authorization.host.locale', $locale);
+        return $this->setEventRootAttributeData('authorization.host.locale', $locale);
     }
 
     /**
@@ -259,15 +253,15 @@ class Authorization extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.license_authorization.authorization.host.application.name`
+     * `<ROOT ATTR>.authorization.host.application.name`
      *
      * @param string $name
      * @return self
      */
     public function setAuthorizationHostApplicationName(string $name): self
     {
-        return $this->setData(
-            $this->getEventDataRootAttribute() . '.authorization.host.application.name',
+        return $this->setEventRootAttributeData(
+            'authorization.host.application.name',
             $this->productShortNameToProductFamily($name)
         );
     }
@@ -277,9 +271,9 @@ class Authorization extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.license_authorization.authorization.host.application.version.release`
-     * `<ROOT ATTR>.license_authorization.authorization.host.application.version.build`
-     * `<ROOT ATTR>.license_authorization.authorization.host.application.version.build_int`
+     * `<ROOT ATTR>.authorization.host.application.version.release`
+     * `<ROOT ATTR>.authorization.host.application.version.build`
+     * `<ROOT ATTR>.authorization.host.application.version.build_int`
      *
      * @param string $version
      * @return self
@@ -287,7 +281,7 @@ class Authorization extends AbstractTimeSeriesEvent
     public function setAuthorizationHostApplicationVersion(string $version): self
     {
         return $this->setData(
-            $this->getEventDataRootAttribute() . '.authorization.host.application.version',
+            'authorization.host.application.version',
             $this->getBuildNumberData($version)
         );
     }
@@ -297,14 +291,14 @@ class Authorization extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.license_authorization.license.id`
+     * `<ROOT ATTR>.license.id`
      *
      * @param string $id
      * @return self
      */
     public function setLicenseId(string $id): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.license.id', $id);
+        return $this->setEventRootAttributeData('license.id', $id);
     }
 
     /**
@@ -312,14 +306,14 @@ class Authorization extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.license_authorization.license.valid_to`
+     * `<ROOT ATTR>.license.valid_to`
      *
      * @param DateTime $dt
      * @return self
      */
     public function setLicenseValidTo(DateTime $dt): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.license.valid_to', $dt->format(DateTime::ATOM));
+        return $this->setEventRootAttributeData('license.valid_to', $dt->format(DateTime::ATOM));
     }
 
     /**
@@ -327,14 +321,14 @@ class Authorization extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.license_authorization.license.license_type.id`
+     * `<ROOT ATTR>.license.license_type.id`
      *
      * @param string $id
      * @return self
      */
     public function setLicenseTypeId(string $id): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.license.license_type.id', $id);
+        return $this->setEventRootAttributeData('license.license_type.id', $id);
     }
 
     /**
@@ -342,14 +336,14 @@ class Authorization extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.license_authorization.license.license_type.name`
+     * `<ROOT ATTR>.license.license_type.name`
      *
      * @param string $name
      * @return self
      */
     public function setLicenseTypeName(string $name): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.license.license_type.name', $name);
+        return $this->setEventRootAttributeData('license.license_type.name', $name);
     }
 
     /**
@@ -357,7 +351,7 @@ class Authorization extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.license_authorization.license.license_type.term`
+     * `<ROOT ATTR>.license.license_type.term`
      *
      * @param string $options
      * @return self
@@ -382,7 +376,7 @@ class Authorization extends AbstractTimeSeriesEvent
                 $term = 'trial';
                 break;
         }
-        return $this->setData($this->getEventDataRootAttribute() . '.license.license_type.term', $term);
+        return $this->setEventRootAttributeData('license.license_type.term', $term);
     }
 
     /**
@@ -390,14 +384,14 @@ class Authorization extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.license_authorization.license.license_type.rlm_schema.name`
+     * `<ROOT ATTR>.license.license_type.rlm_schema.name`
      *
      * @param string $name
      * @return self
      */
     public function setLicenseTypeRlmSchemaName(string $name): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.license.license_type.rlm_schema.name', $name);
+        return $this->setEventRootAttributeData('license.license_type.rlm_schema.name', $name);
     }
 
     /**
@@ -405,14 +399,14 @@ class Authorization extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.license_authorization.license.license_type.rlm_schema.version`
+     * `<ROOT ATTR>.license.license_type.rlm_schema.version`
      *
      * @param string $v
      * @return self
      */
     public function setLicenseTypeRlmSchemaVersion(string $v): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.license.license_type.rlm_schema.version', $v);
+        return $this->setEventRootAttributeData('license.license_type.rlm_schema.version', $v);
     }
 
     /**
@@ -420,14 +414,14 @@ class Authorization extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.license_authorization.license.user.id`
+     * `<ROOT ATTR>.license.user.id`
      *
      * @param string $id
      * @return self
      */
     public function setLicenseUserId(string $id): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.license.user.id', $id);
+        return $this->setEventRootAttributeData('license.user.id', $id);
     }
 
     /**
@@ -435,14 +429,14 @@ class Authorization extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.license_authorization.license.product.id`
+     * `<ROOT ATTR>.license.product.id`
      *
      * @param string $id
      * @return self
      */
     public function setLicenseProductId(string $id): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.license.product.id', $id);
+        return $this->setEventRootAttributeData('license.product.id', $id);
     }
 
     /**
@@ -450,7 +444,7 @@ class Authorization extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.license_authorization.license.product.created_at`
+     * `<ROOT ATTR>.license.product.created_at`
      *
      * @param DateTime $dt
      * @return self
@@ -458,7 +452,7 @@ class Authorization extends AbstractTimeSeriesEvent
     public function setLicenseProductCreatedAt(DateTime $dt): self
     {
         return $this->setData(
-            $this->getEventDataRootAttribute() . '.license.product.created_at',
+            'license.product.created_at',
             $dt->format(DateTime::ATOM)
         );
     }
@@ -468,14 +462,14 @@ class Authorization extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.license_authorization.license.product.product_type.id`
+     * `<ROOT ATTR>.license.product.product_type.id`
      *
      * @param string $id
      * @return self
      */
     public function setLicenseProductTypeId(string $id): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.license.product.product_type.id', $id);
+        return $this->setEventRootAttributeData('license.product.product_type.id', $id);
     }
 
     /**
@@ -483,13 +477,13 @@ class Authorization extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.license_authorization.license.product.product_type.name`
+     * `<ROOT ATTR>.license.product.product_type.name`
      *
      * @param string $name
      * @return self
      */
     public function setLicenseProductTypeName(string $name): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.license.product.product_type.name', $name);
+        return $this->setEventRootAttributeData('license.product.product_type.name', $name);
     }
 }

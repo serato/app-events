@@ -41,8 +41,8 @@ class OrderInvoiceTest extends AbstractTestCase
             ->setPaymentInstrumentType(OrderInvoice::CREDITCARD)
             ->setPaymentInstrumentName('Visa 0122')
             ->setPaymentInstrumentTransactionReference('ref-12345')
-
-            ->setInvoiceItems([$orderItem]);
+            ->setInvoiceItems([$orderItem])
+        ;
 
         $this->assertTrue(is_array($event->get()));
         $this->assertEquals([$event->getEventActionCategory(), $event->getEventActionName()], $event->getEventAction());

@@ -16,16 +16,16 @@ use Serato\AppEvents\Event\AbstractTimeSeriesEvent;
  *
  * Sets the following fields:
  *
- * `<ROOT ATTR>.asset_download.id`
- * `<ROOT ATTR>.asset_download.key`
- * `<ROOT ATTR>.asset_download.file.extension`
- * `<ROOT ATTR>.asset_download.file.size`
- * `<ROOT ATTR>.asset_download.file.name`
- * `<ROOT ATTR>.asset_download.file.type`
- * `<ROOT ATTR>.asset_download.file.content_pack.host_applications`
- * `<ROOT ATTR>.asset_download.file.application_installer.product_family`
- * `<ROOT ATTR>.asset_download.file.application_installer.release_type`
- * `<ROOT ATTR>.asset_download.file.application_installer.os.platform`
+ * `<ROOT ATTR>.id`
+ * `<ROOT ATTR>.key`
+ * `<ROOT ATTR>.file.extension`
+ * `<ROOT ATTR>.file.size`
+ * `<ROOT ATTR>.file.name`
+ * `<ROOT ATTR>.file.type`
+ * `<ROOT ATTR>.file.content_pack.host_applications`
+ * `<ROOT ATTR>.file.application_installer.product_family`
+ * `<ROOT ATTR>.file.application_installer.release_type`
+ * `<ROOT ATTR>.file.application_installer.os.platform`
  */
 class Download extends AbstractTimeSeriesEvent
 {
@@ -39,7 +39,7 @@ class Download extends AbstractTimeSeriesEvent
         # The ECS `file` field defines a `type` field with various valid values.
         # https://www.elastic.co/guide/en/ecs/current/ecs-file.html
         # For our purposes here it's always `file`.
-        $this->setData($this->getEventDataRootAttribute() . '.file.type', 'file');
+        $this->setEventRootAttributeData('file.type', 'file');
         # The event always starts in the `unknown` state
         $this->setEventOutcome(self::UNKNOWN);
     }
@@ -65,14 +65,14 @@ class Download extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.asset_download.id`
+     * `<ROOT ATTR>.id`
      *
      * @param string $id
      * @return self
      */
     public function setFileId(string $id): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.id', $id);
+        return $this->setEventRootAttributeData('id', $id);
     }
 
     /**
@@ -81,14 +81,14 @@ class Download extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.asset_download.key`
+     * `<ROOT ATTR>.key`
      *
      * @param string $key
      * @return self
      */
     public function setFileKey(string $key): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.key', $key);
+        return $this->setEventRootAttributeData('key', $key);
     }
 
     /**
@@ -96,14 +96,14 @@ class Download extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.asset_download.file.extension`
+     * `<ROOT ATTR>.file.extension`
      *
      * @param string $ext
      * @return self
      */
     public function setFileExtension(string $ext): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.file.extension', $ext);
+        return $this->setEventRootAttributeData('file.extension', $ext);
     }
 
     /**
@@ -111,14 +111,14 @@ class Download extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.asset_download.file.size`
+     * `<ROOT ATTR>.file.size`
      *
      * @param integer $bytes
      * @return self
      */
     public function setFileSize(int $bytes): self
     {
-        return $this->setData($this->getEventDataRootAttribute() . '.file.size', $bytes);
+        return $this->setEventRootAttributeData('file.size', $bytes);
     }
 
     /**
@@ -126,12 +126,12 @@ class Download extends AbstractTimeSeriesEvent
      *
      * Sets the following field(s):
      *
-     * `<ROOT ATTR>.asset_download.file.name`
-     * `<ROOT ATTR>.asset_download.file.type`
-     * `<ROOT ATTR>.asset_download.file.content_pack.host_applications`
-     * `<ROOT ATTR>.asset_download.file.application_installer.product_family`
-     * `<ROOT ATTR>.asset_download.file.application_installer.release_type`
-     * `<ROOT ATTR>.asset_download.file.application_installer.os.platform`
+     * `<ROOT ATTR>.file.name`
+     * `<ROOT ATTR>.file.type`
+     * `<ROOT ATTR>.file.content_pack.host_applications`
+     * `<ROOT ATTR>.file.application_installer.product_family`
+     * `<ROOT ATTR>.file.application_installer.release_type`
+     * `<ROOT ATTR>.file.application_installer.os.platform`
      *
      * @param string $product       Product stream for the resource. eg. `scratchlive`. `dj`, `content`
      * @param string $resourceType  Type of resource eg. `win-installer`, `mac-installer-no-corepack`, `content-pack`
@@ -153,36 +153,30 @@ class Download extends AbstractTimeSeriesEvent
             __METHOD__,
             'releaseType'
         );
-        $this->setData($this->getEventDataRootAttribute() . '.version', $this->getBuildNumberData($version));
+        $this->setEventRootAttributeData('version', $this->getBuildNumberData($version));
 
         if ($resourceType === 'content-pack') {
-            $this->setData($this->getEventDataRootAttribute() . '.type', 'content_pack');
-            $this->setData($this->getEventDataRootAttribute() . '.name', $name);
+            $this->setEventRootAttributeData('type', 'content_pack');
+            $this->setEventRootAttributeData('name', $name);
             # Yeah yeah, hardcoded for now.
-            $this->setData($this->getEventDataRootAttribute() . '.content_pack.host_applications', ['Serato Studio']);
+            $this->setEventRootAttributeData('content_pack.host_applications', ['Serato Studio']);
         } else {
             $type = 'application_installer';
             if ($resourceType === 'win-installer-no-corepack' || $resourceType === 'mac-installer-no-corepack') {
                 $type = 'application_installer_no_content';
             }
-            $this->setData($this->getEventDataRootAttribute() . '.type', $type);
+            $this->setEventRootAttributeData('type', $type);
             $productFamily = $this->productShortNameToProductFamily($product);
-            $this->setData(
-                $this->getEventDataRootAttribute() . '.name',
+            $this->setEventRootAttributeData(
+                'name',
                 $productFamily . ' ' . $this->getVersionNumberRelease()
             );
-            $this->setData(
-                $this->getEventDataRootAttribute() . '.application_installer.product_family',
-                $productFamily
-            );
-            $this->setData(
-                $this->getEventDataRootAttribute() . '.application_installer.os.platform',
+            $this->setEventRootAttributeData('application_installer.product_family', $productFamily);
+            $this->setEventRootAttributeData(
+                'application_installer.os.platform',
                 $this->getNormalizedOsPlatform($resourceType)
             );
-            $this->setData(
-                $this->getEventDataRootAttribute() . '.application_installer.release_type',
-                $releaseType
-            );
+            $this->setEventRootAttributeData('application_installer.release_type', $releaseType);
         }
         return $this;
     }
@@ -197,9 +191,9 @@ class Download extends AbstractTimeSeriesEvent
      */
     public function getVersionNumberBuild(): ?string
     {
-        return $this->getData($this->getEventDataRootAttribute() . '.version.build') === null ?
+        return $this->getEventRootData('version.build') === null ?
                 null :
-                (string)$this->getData($this->getEventDataRootAttribute() . '.version.build');
+                (string)$this->getEventRootData('version.build');
     }
 
     /**
@@ -212,9 +206,9 @@ class Download extends AbstractTimeSeriesEvent
      */
     public function getVersionNumberRelease(): ?string
     {
-        return $this->getData($this->getEventDataRootAttribute() . '.version.release') === null ?
+        return $this->getEventRootData('version.release') === null ?
                 null :
-                (string)$this->getData($this->getEventDataRootAttribute() . '.version.release');
+                (string)$this->getEventRootData('version.release');
     }
 
     /**
@@ -224,8 +218,8 @@ class Download extends AbstractTimeSeriesEvent
      */
     public function getVersionNumberInt(): ?int
     {
-        return $this->getData($this->getEventDataRootAttribute() . '.version.build_int') === null ?
+        return $this->getEventRootData('version.build_int') === null ?
                 null :
-                (int)$this->getData($this->getEventDataRootAttribute() . '.version.build_int');
+                (int)$this->getEventRootData('version.build_int');
     }
 }
