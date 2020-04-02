@@ -14,6 +14,10 @@ class OrderTest extends AbstractTestCase
 {
     public function testSmokeTest(): void
     {
+        $orderId = 'order-123';
+        $eventStart = new DateTime('2020-01-01T05:30:30+00:00');
+        $eventEnd = new DateTime('2020-02-02T12:45:30+00:00');
+
         $orderItems = [$this->getOrderItem()];
 
         $event = new Order;
@@ -26,10 +30,10 @@ class OrderTest extends AbstractTestCase
                 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' .
                 '(KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'
             )
-            ->setEventStart(new DateTime)
-            ->setEventEnd(new DateTime)
+            ->setEventStart($eventStart)
+            ->setEventEnd($eventEnd)
             # Order
-            ->setOrderId('order-123')
+            ->setOrderId($orderId)
             ->setOrderInteractive(true)
             ->setCartId('cart-456')
             ->setOrderUserId('user-123')
@@ -49,6 +53,9 @@ class OrderTest extends AbstractTestCase
         ;
 
         $this->assertTrue(is_array($event->get()));
+        $this->assertEquals($event->getEventStart(), $eventStart);
+        $this->assertEquals($event->getEventEnd(), $eventEnd);
+        $this->assertEquals($event->getEventId(), $orderId);
         $this->assertEquals([$event->getEventActionCategory(), $event->getEventActionName()], $event->getEventAction());
     }
 

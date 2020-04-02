@@ -10,6 +10,8 @@ class RedirectTest extends AbstractTestCase
 {
     public function testSmokeTest(): void
     {
+        $id = 'id-123';
+
         $event  = new Redirect;
         $event
             # AbstractTimeSeriesEvent
@@ -20,7 +22,7 @@ class RedirectTest extends AbstractTestCase
                 '(KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'
             )
             # Redirect
-            ->setRedirectId('id-123')
+            ->setRedirectId($id)
             ->setRedirectName('Manage Subscription')
             ->setRedirectGroup('Serato DJ (app)')
             ->setRedirectShortUrl('sera.to/-b6ap')
