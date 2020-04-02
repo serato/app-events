@@ -21,9 +21,6 @@ abstract class AbstractDataContainer
     /* @var array */
     private $data = [];
 
-    /* @var array */
-    private $pathedData = [];
-
     /**
      * Returns the entire event data array
      *
@@ -42,7 +39,15 @@ abstract class AbstractDataContainer
      */
     protected function getData(string $path)
     {
-        return isset($this->pathedData[$path]) ? $this->pathedData[$path] : null;
+        $data = $this->data;
+        foreach (explode('.', $path) as $i) {
+            if (isset($data[$i])) {
+                $data = $data[$i];
+            } else {
+                return null;
+            }
+        }
+        return $data;
     }
 
     /**
@@ -64,11 +69,9 @@ abstract class AbstractDataContainer
             }
         }
         $pathArray = explode('.', $path);
-        $this->pathedData[$path] = $item;
         $this->set($pathArray, $this->data, $item);
         if ($multiItem) {
             foreach ($item as $k => $v) {
-                $this->pathedData[$path . '.' . $k] = $v;
                 $this->set(array_merge($pathArray, [$k]), $this->data, $v);
             }
         }

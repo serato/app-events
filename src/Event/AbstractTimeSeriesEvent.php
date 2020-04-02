@@ -251,16 +251,7 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventDataContainer
      */
     public function getEventRootData(?string $path = null)
     {
-        # FIXME because this is dumb
-        if ($path === null) {
-            $data = $this->get();
-            foreach (explode('.', self::ROOT_EVENT_ATTR) as $i) {
-                $data = $data[$i];
-            }
-            return $data;
-        } else {
-            return $this->getData(self::ROOT_EVENT_ATTR . '.' . $path);
-        }
+        return $this->getData(self::ROOT_EVENT_ATTR . ($path === null ? '' : '.' . $path));
     }
 
     /**
