@@ -17,6 +17,7 @@ use Exception;
  * Sets the following fields:
  *
  * `id`
+ * `number`
  * `debtor_code`
  *
  * Additionally, the `OrderInvoice::setInvoiceItems` method takes an array of
@@ -61,6 +62,21 @@ class OrderInvoice extends AbstractTimeSeriesCheckoutEvent
         return $this
             ->setEventId($id)
             ->setData('id', $id);
+    }
+
+    /**
+     * Sets the invoice number.
+     *
+     * Sets the following field(s):
+     *
+     * `number`
+     *
+     * @param string $number
+     * @return self
+     */
+    public function setNumber(string $number): self
+    {
+        return $this->setData('number', $number);
     }
 
     /**
