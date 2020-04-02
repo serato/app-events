@@ -131,6 +131,16 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventDataContainer
     }
 
     /**
+     * Returns the event id
+     *
+     * @return string|null
+     */
+    public function getEventId(): ?string
+    {
+        return $this->getData('event.id') === null ? null : (string)$this->getData('event.id');
+    }
+
+    /**
      * Sets the event action
      *
      * Sets the following field(s):
@@ -171,6 +181,16 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventDataContainer
     }
 
     /**
+     * Returns the event start
+     *
+     * @return DateTime|null
+     */
+    public function getEventStart(): ?DateTime
+    {
+        return $this->getData('event.start') === null ? null : new DateTime($this->getData('event.start'));
+    }
+
+    /**
      * Sets the event end time
      *
      * Sets the following field(s):
@@ -183,6 +203,16 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventDataContainer
     public function setEventEnd(DateTime $dt)
     {
         return $this->setData('event.end', $dt->format(DateTime::ATOM));
+    }
+
+    /**
+     * Returns the event end
+     *
+     * @return DateTime|null
+     */
+    public function getEventEnd(): ?DateTime
+    {
+        return $this->getData('event.end') === null ? null : new DateTime($this->getData('event.end'));
     }
 
     /**
@@ -204,14 +234,33 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventDataContainer
     }
 
     /**
+     * Returns the event outcome
+     *
+     * @return string|null
+     */
+    public function getEventOutcome(): ?string
+    {
+        return $this->getData('event.outcome') === null ? null : (string)$this->getData('event.outcome');
+    }
+
+    /**
      * Returns data for a specified path under the root event attribute
      *
-     * @param string $path
+     * @param null|string $path
      * @return null|mixed
      */
-    public function getEventRootData(string $path)
+    public function getEventRootData(?string $path = null)
     {
-        return $this->getData(self::ROOT_EVENT_ATTR . '.' . $path);
+        # FIXME because this is dumb
+        if ($path === null) {
+            $data = $this->get();
+            foreach (explode('.', self::ROOT_EVENT_ATTR) as $i) {
+                $data = $data[$i];
+            }
+            return $data;
+        } else {
+            return $this->getData(self::ROOT_EVENT_ATTR . '.' . $path);
+        }
     }
 
     /**

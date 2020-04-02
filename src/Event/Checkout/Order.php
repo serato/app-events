@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Serato\AppEvents\Event\Checkout;
 
 use Exception;
+use DateTime;
 
 /**
  * ** CheckoutOrder **
@@ -368,7 +369,11 @@ class Order extends AbstractTimeSeriesCheckoutEvent
                     'Invalid argument. Items must all be \Serato\AppEvents\Event\Checkout\OrderInvoice instances'
                 );
             }
-            $data[] = $invoice->get();
+            $data[] = array_merge(
+                $invoice->getEventRootData(),
+                $invoice->getEventStart() === null ? [] :
+                    ['created_at' => $invoice->getEventStart()->format(DateTime::ATOM)]
+            );
         }
         return $this->setEventRootAttributeData('invoices', $data);
     }
