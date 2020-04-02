@@ -33,7 +33,8 @@ class OrderInvoiceTest extends AbstractTestCase
             # AbstractTimeSeriesEvent
             ->setEventId('InvoiceId-123')
             # OrderInvoice
-            ->setId('InvoiceId-123')
+            ->setId('123')
+            ->setNumber('InvoiceId-123')
             ->setDebtorCode(OrderInvoice::WEBC001)
             ->setInvoiceItems([$orderItem]);
 
