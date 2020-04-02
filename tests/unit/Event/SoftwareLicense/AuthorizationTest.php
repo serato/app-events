@@ -11,15 +11,20 @@ class AuthorizationTest extends AbstractTestCase
 {
     public function testSmokeTest(): void
     {
+        $id = 'id-789';
+        $eventStart = new DateTime('2020-01-01T05:30:30+00:00');
+        $eventEnd = new DateTime('2020-02-02T12:45:30+00:00');
+
         $event  = new Authorization;
         $event
             # AbstractTimeSeriesEvent
             ->setUserId('user-123')
             ->setClientIp('24.30.52.126')
-            ->setEventEnd(new DateTime)
+            ->setEventStart($eventStart)
+            ->setEventEnd($eventEnd)
             ->setEventOutcome(Authorization::SUCCESS)
             # Authorization
-            ->setAuthorizationId('id-789')
+            ->setAuthorizationId($id)
             ->setAuthorizationValidTo(new DateTime)
             ->setAuthorizationCommittedAt(new DateTime)
             ->setAuthorizationResultCode(0)
@@ -44,6 +49,9 @@ class AuthorizationTest extends AbstractTestCase
             ->setLicenseProductTypeName('Serato Flip Expansion Pack [download]')
         ;
         $this->assertTrue(is_array($event->get()));
+        $this->assertEquals($event->getEventStart(), $eventStart);
+        $this->assertEquals($event->getEventEnd(), $eventEnd);
+        $this->assertEquals($event->getEventId(), $id);
         $this->assertEquals([$event->getEventActionCategory(), $event->getEventActionName()], $event->getEventAction());
     }
 

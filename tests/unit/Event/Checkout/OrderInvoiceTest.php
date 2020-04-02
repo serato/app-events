@@ -12,6 +12,9 @@ class OrderInvoiceTest extends AbstractTestCase
 {
     public function testSmokeTest(): void
     {
+        $invoiceId = '123';
+        $eventStart = new DateTime('2020-01-01T05:30:30+00:00');
+
         $orderItem = new OrderItem;
         $orderItem
             ->setOrderItemId("123")
@@ -30,16 +33,41 @@ class OrderInvoiceTest extends AbstractTestCase
 
         $event = new OrderInvoice;
         $event
-            # AbstractTimeSeriesEvent
-            ->setEventId('InvoiceId-123')
-            # OrderInvoice
-            ->setId('123')
+            ->setId($invoiceId)
             ->setNumber('InvoiceId-123')
+            ->setEventStart($eventStart)
             ->setDebtorCode(OrderInvoice::WEBC001)
-            ->setInvoiceItems([$orderItem]);
+            ->setPaymentGateway(OrderInvoice::BRAINTREE)
+            ->setPaymentGatewayTransactionReference('ref-abcdef')
+            ->setPaymentInstrumentType(OrderInvoice::CREDITCARD)
+            ->setPaymentInstrumentName('Visa 0122')
+            ->setPaymentInstrumentTransactionReference('ref-12345')
+            ->setInvoiceItems([$orderItem])
+        ;
+
+        $this->assertEquals($event->getEventStart(), $eventStart);
+        $this->assertEquals($event->getEventId(), $invoiceId);
 
         $this->assertTrue(is_array($event->get()));
         $this->assertEquals([$event->getEventActionCategory(), $event->getEventActionName()], $event->getEventAction());
+    }
+
+    /**
+     * @expectedException \Serato\AppEvents\Exception\InvalidDataValueException
+     */
+    public function testInvalidPaymentGateway(): void
+    {
+        $event = new OrderInvoice;
+        $event->setPaymentGateway('DEFO-INVALID');
+    }
+
+    /**
+     * @expectedException \Serato\AppEvents\Exception\InvalidDataValueException
+     */
+    public function testInvalidPaymentInstrumentType(): void
+    {
+        $event = new OrderInvoice;
+        $event->setPaymentInstrumentType('DEFO-INVALID');
     }
 
     /**

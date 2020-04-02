@@ -11,6 +11,10 @@ class DownloadTest extends AbstractTestCase
 {
     public function testSmokeTest(): void
     {
+        $id = 'dl-1234';
+        $eventStart = new DateTime('2020-01-01T05:30:30+00:00');
+        $outcome = Download::FAILURE;
+
         $versionRelease = '1.2.3';
         $versionBuild = '456';
 
@@ -23,13 +27,14 @@ class DownloadTest extends AbstractTestCase
                 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' .
                 '(KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'
             )
-            ->setEventId('dl-1234')
-            ->setEventStart(new DateTime)
+            ->setEventId($id)
+            ->setEventStart($eventStart)
             # Download
             ->setFileId('file-789')
             ->setFileKey('/path/installer.dmg')
             ->setFileExtension('dmg')
             ->setFileSize(1234567)
+            ->setEventOutcome($outcome)
             ->buildResourceInfo(
                 'dj',
                 'win-installer-no-corepack',
@@ -40,6 +45,9 @@ class DownloadTest extends AbstractTestCase
         ;
 
         $this->assertTrue(is_array($event->get()));
+        $this->assertEquals($event->getEventStart(), $eventStart);
+        $this->assertEquals($event->getEventId(), $id);
+        $this->assertEquals($event->getEventOutcome(), $outcome);
         $this->assertEquals([$event->getEventActionCategory(), $event->getEventActionName()], $event->getEventAction());
         $this->assertEquals($versionRelease, $event->getVersionNumberRelease());
         $this->assertEquals($versionRelease . '.' . $versionBuild, $event->getVersionNumberBuild());

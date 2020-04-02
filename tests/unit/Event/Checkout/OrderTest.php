@@ -14,6 +14,10 @@ class OrderTest extends AbstractTestCase
 {
     public function testSmokeTest(): void
     {
+        $orderId = 'order-123';
+        $eventStart = new DateTime('2020-01-01T05:30:30+00:00');
+        $eventEnd = new DateTime('2020-02-02T12:45:30+00:00');
+
         $orderItems = [$this->getOrderItem()];
 
         $event = new Order;
@@ -26,10 +30,10 @@ class OrderTest extends AbstractTestCase
                 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' .
                 '(KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'
             )
-            ->setEventStart(new DateTime)
-            ->setEventEnd(new DateTime)
+            ->setEventStart($eventStart)
+            ->setEventEnd($eventEnd)
             # Order
-            ->setOrderId('order-123')
+            ->setOrderId($orderId)
             ->setOrderInteractive(true)
             ->setCartId('cart-456')
             ->setOrderUserId('user-123')
@@ -44,16 +48,14 @@ class OrderTest extends AbstractTestCase
             ->setUserBillingAddressPostcode('90210')
             ->setUserBillingAddressCountryCode('US')
             ->setTaxRate(0.0)
-            ->setPaymentGateway(Order::BRAINTREE)
-            ->setPaymentGatewayTransactionReference('ref-abcdef')
-            ->setPaymentInstrumentType(Order::CREDITCARD)
-            ->setPaymentInstrumentName('Visa 0122')
-            ->setPaymentInstrumentTransactionReference('ref-12345')
             ->setOrderItems($orderItems)
             ->setOrderInvoices([$this->getOrderInvoice($orderItems)])
         ;
 
         $this->assertTrue(is_array($event->get()));
+        $this->assertEquals($event->getEventStart(), $eventStart);
+        $this->assertEquals($event->getEventEnd(), $eventEnd);
+        $this->assertEquals($event->getEventId(), $orderId);
         $this->assertEquals([$event->getEventActionCategory(), $event->getEventActionName()], $event->getEventAction());
     }
 
@@ -73,24 +75,6 @@ class OrderTest extends AbstractTestCase
     {
         $event = new Order;
         $event->setOrderInvoices([1]);
-    }
-
-    /**
-     * @expectedException \Serato\AppEvents\Exception\InvalidDataValueException
-     */
-    public function testInvalidPaymentGateway(): void
-    {
-        $event = new Order;
-        $event->setPaymentGateway('DEFO-INVALID');
-    }
-
-    /**
-     * @expectedException \Serato\AppEvents\Exception\InvalidDataValueException
-     */
-    public function testInvalidPaymentInstrumentType(): void
-    {
-        $event = new Order;
-        $event->setPaymentInstrumentType('DEFO-INVALID');
     }
 
     protected function getOrderItem(): OrderItem
@@ -120,7 +104,13 @@ class OrderTest extends AbstractTestCase
             ->setEventId('InvoiceId-123')
             ->setId('InvoiceId-123')
             ->setDebtorCode(OrderInvoice::WEBC001)
-            ->setInvoiceItems($orderItems);
+            ->setInvoiceItems($orderItems)
+            ->setPaymentGateway(OrderInvoice::BRAINTREE)
+            ->setPaymentGatewayTransactionReference('ref-abcdef')
+            ->setPaymentInstrumentType(OrderInvoice::CREDITCARD)
+            ->setPaymentInstrumentName('Visa 0122')
+            ->setPaymentInstrumentTransactionReference('ref-12345')
+        ;
         return $inv;
     }
 }

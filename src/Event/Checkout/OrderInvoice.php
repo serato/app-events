@@ -19,6 +19,13 @@ use Exception;
  * `id`
  * `number`
  * `debtor_code`
+
+ * `payment.gateway`
+ * `payment.transaction_reference`
+ * `payment.payment_instrument.type`
+ * `payment.payment_instrument.name`
+ * `payment.payment_instrument.transaction_reference`
+
  *
  * Additionally, the `OrderInvoice::setInvoiceItems` method takes an array of
  * `\Serato\AppEvents\Event\Checkout\OrderItem` objects and copies their data to:
@@ -34,6 +41,9 @@ use Exception;
  */
 class OrderInvoice extends AbstractTimeSeriesCheckoutEvent
 {
+    public const BRAINTREE = 'braintree';
+    public const CREDITCARD = 'creditcard';
+    public const PAYPAL_ACCOUNT = 'paypal_account';
     public const WEBC001 = 'WEBC001';
     public const WEBC003 = 'WEBC003';
     public const WEBC004 = 'WEBC004';
@@ -61,7 +71,7 @@ class OrderInvoice extends AbstractTimeSeriesCheckoutEvent
     {
         return $this
             ->setEventId($id)
-            ->setData('id', $id);
+            ->setEventRootAttributeData('id', $id);
     }
 
     /**
@@ -76,7 +86,7 @@ class OrderInvoice extends AbstractTimeSeriesCheckoutEvent
      */
     public function setNumber(string $number): self
     {
-        return $this->setData('number', $number);
+        return $this->setEventRootAttributeData('number', $number);
     }
 
     /**
@@ -92,7 +102,91 @@ class OrderInvoice extends AbstractTimeSeriesCheckoutEvent
     public function setDebtorCode(string $code): self
     {
         $this->validateDataValue($code, [self::WEBC001, self::WEBC003, self::WEBC004], __METHOD__);
-        return $this->setData('debtor_code', $code);
+        return $this->setEventRootAttributeData('debtor_code', $code);
+    }
+
+    /**
+     * Sets the order payment gateway.
+     *
+     * Sets the following field(s):
+     *
+     * `payment.gateway`
+     *
+     * @param string $gateway
+     * @return self
+     */
+    public function setPaymentGateway(string $gateway): self
+    {
+        $this->validateDataValue($gateway, [self::BRAINTREE], __METHOD__);
+        return $this->setEventRootAttributeData('payment.gateway', $gateway);
+    }
+
+    /**
+     * Sets the order payment gateway transaction reference.
+     *
+     * Sets the following field(s):
+     *
+     * `payment.gateway_transaction_reference`
+     *
+     * @param string $ref
+     * @return self
+     */
+    public function setPaymentGatewayTransactionReference(string $ref): self
+    {
+        return $this->setEventRootAttributeData('payment.gateway_transaction_reference', $ref);
+    }
+
+    /**
+     * Sets the payment instrument type.
+     *
+     * One of `creditcard` or `paypal_account`
+     *
+     * Sets the following field(s):
+     *
+     * `payment.payment_instrument.type`
+     *
+     * @param string $type
+     * @return self
+     */
+    public function setPaymentInstrumentType(string $type): self
+    {
+        $this->validateDataValue($type, [self::CREDITCARD, self::PAYPAL_ACCOUNT], __METHOD__);
+        return $this->setEventRootAttributeData('payment.payment_instrument.type', $type);
+    }
+
+    /**
+     * A human readable name for the payment instrument.
+     *
+     * Typically contains a portion of a credit card number for credit card payment instruments,
+     * or an email address for PayPal accounts.
+     *
+     * Sets the following field(s):
+     *
+     * `payment.payment_instrument.name`
+     *
+     * @param string $name
+     * @return self
+     */
+    public function setPaymentInstrumentName(string $name): self
+    {
+        return $this->setEventRootAttributeData('payment.payment_instrument.name', $name);
+    }
+
+    /**
+     * Sets the payment instrument transaction reference.
+     *
+     * This is an addition payment reference specific to the payment intstrument.
+     *
+     * Sets the following field(s):
+     *
+     * `payment.payment_instrument.transaction_reference`
+     *
+     * @param string $ref
+     * @return self
+     */
+    public function setPaymentInstrumentTransactionReference(string $ref): self
+    {
+        return $this->setEventRootAttributeData('payment.payment_instrument.transaction_reference', $ref);
     }
 
     /**
@@ -153,10 +247,10 @@ class OrderInvoice extends AbstractTimeSeriesCheckoutEvent
         }
 
         return $this
-            ->setData('items', $data)
-            ->setData('amounts.base', $base)
-            ->setData('amounts.discounts', $discounts)
-            ->setData('amounts.tax', $tax)
-            ->setData('amounts.total', $total);
+            ->setEventRootAttributeData('items', $data)
+            ->setEventRootAttributeData('amounts.base', $base)
+            ->setEventRootAttributeData('amounts.discounts', $discounts)
+            ->setEventRootAttributeData('amounts.tax', $tax)
+            ->setEventRootAttributeData('amounts.total', $total);
     }
 }
