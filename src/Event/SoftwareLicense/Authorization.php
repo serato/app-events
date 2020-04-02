@@ -280,7 +280,7 @@ class Authorization extends AbstractTimeSeriesEvent
      */
     public function setAuthorizationHostApplicationVersion(string $version): self
     {
-        return $this->setData(
+        return $this->setEventRootAttributeData(
             'authorization.host.application.version',
             $this->getBuildNumberData($version)
         );
@@ -451,7 +451,7 @@ class Authorization extends AbstractTimeSeriesEvent
      */
     public function setLicenseProductCreatedAt(DateTime $dt): self
     {
-        return $this->setData(
+        return $this->setEventRootAttributeData(
             'license.product.created_at',
             $dt->format(DateTime::ATOM)
         );
