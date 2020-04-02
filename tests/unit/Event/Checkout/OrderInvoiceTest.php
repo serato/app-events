@@ -36,10 +36,34 @@ class OrderInvoiceTest extends AbstractTestCase
             ->setId('123')
             ->setNumber('InvoiceId-123')
             ->setDebtorCode(OrderInvoice::WEBC001)
+            ->setPaymentGateway(OrderInvoice::BRAINTREE)
+            ->setPaymentGatewayTransactionReference('ref-abcdef')
+            ->setPaymentInstrumentType(OrderInvoice::CREDITCARD)
+            ->setPaymentInstrumentName('Visa 0122')
+            ->setPaymentInstrumentTransactionReference('ref-12345')
+
             ->setInvoiceItems([$orderItem]);
 
         $this->assertTrue(is_array($event->get()));
         $this->assertEquals([$event->getEventActionCategory(), $event->getEventActionName()], $event->getEventAction());
+    }
+
+    /**
+     * @expectedException \Serato\AppEvents\Exception\InvalidDataValueException
+     */
+    public function testInvalidPaymentGateway(): void
+    {
+        $event = new OrderInvoice;
+        $event->setPaymentGateway('DEFO-INVALID');
+    }
+
+    /**
+     * @expectedException \Serato\AppEvents\Exception\InvalidDataValueException
+     */
+    public function testInvalidPaymentInstrumentType(): void
+    {
+        $event = new OrderInvoice;
+        $event->setPaymentInstrumentType('DEFO-INVALID');
     }
 
     /**

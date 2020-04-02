@@ -44,11 +44,6 @@ class OrderTest extends AbstractTestCase
             ->setUserBillingAddressPostcode('90210')
             ->setUserBillingAddressCountryCode('US')
             ->setTaxRate(0.0)
-            ->setPaymentGateway(Order::BRAINTREE)
-            ->setPaymentGatewayTransactionReference('ref-abcdef')
-            ->setPaymentInstrumentType(Order::CREDITCARD)
-            ->setPaymentInstrumentName('Visa 0122')
-            ->setPaymentInstrumentTransactionReference('ref-12345')
             ->setOrderItems($orderItems)
             ->setOrderInvoices([$this->getOrderInvoice($orderItems)])
         ;
@@ -73,24 +68,6 @@ class OrderTest extends AbstractTestCase
     {
         $event = new Order;
         $event->setOrderInvoices([1]);
-    }
-
-    /**
-     * @expectedException \Serato\AppEvents\Exception\InvalidDataValueException
-     */
-    public function testInvalidPaymentGateway(): void
-    {
-        $event = new Order;
-        $event->setPaymentGateway('DEFO-INVALID');
-    }
-
-    /**
-     * @expectedException \Serato\AppEvents\Exception\InvalidDataValueException
-     */
-    public function testInvalidPaymentInstrumentType(): void
-    {
-        $event = new Order;
-        $event->setPaymentInstrumentType('DEFO-INVALID');
     }
 
     protected function getOrderItem(): OrderItem
@@ -120,7 +97,13 @@ class OrderTest extends AbstractTestCase
             ->setEventId('InvoiceId-123')
             ->setId('InvoiceId-123')
             ->setDebtorCode(OrderInvoice::WEBC001)
-            ->setInvoiceItems($orderItems);
+            ->setInvoiceItems($orderItems)
+            ->setPaymentGateway(OrderInvoice::BRAINTREE)
+            ->setPaymentGatewayTransactionReference('ref-abcdef')
+            ->setPaymentInstrumentType(OrderInvoice::CREDITCARD)
+            ->setPaymentInstrumentName('Visa 0122')
+            ->setPaymentInstrumentTransactionReference('ref-12345')
+        ;
         return $inv;
     }
 }

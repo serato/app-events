@@ -31,11 +31,6 @@ use Exception;
  * `<ROOT ATTR>.checkout_order.user.billing_address.postcode`
  * `<ROOT ATTR>.checkout_order.user.billing_address.country_iso_code`
  * `<ROOT ATTR>.checkout_order.tax_rate`
- * `<ROOT ATTR>.checkout_order.payment.provider`
- * `<ROOT ATTR>.checkout_order.payment.transaction_reference`
- * `<ROOT ATTR>.checkout_order.payment.payment_instrument.type`
- * `<ROOT ATTR>.checkout_order.payment.payment_instrument.name`
- * `<ROOT ATTR>.checkout_order.payment.payment_instrument.transaction_reference`
  *
  * Additionally, the `CheckoutOrder::setOrderItems` method takes an array of
  * `\Serato\AppEvents\Event\Checkout\OrderItem` objects and copies their data to:
@@ -51,16 +46,10 @@ use Exception;
  */
 class Order extends AbstractTimeSeriesCheckoutEvent
 {
-    public const BRAINTREE = 'braintree';
-    public const CREDITCARD = 'creditcard';
-    public const PAYPAL_ACCOUNT = 'paypal_account';
-
     public function __construct()
     {
         parent::__construct();
         $this
-            # For now, the only supported payment gateway is Braintree
-            ->setPaymentGateway(self::BRAINTREE)
             ->setData($this->getEventDataRootAttribute() . '.amounts.base', 0)
             ->setData($this->getEventDataRootAttribute() . '.amounts.discounts', 0)
             ->setData($this->getEventDataRootAttribute() . '.amounts.tax', 0)
@@ -308,81 +297,6 @@ class Order extends AbstractTimeSeriesCheckoutEvent
     public function setTaxRate(float $rate): self
     {
         return $this->setData($this->getEventDataRootAttribute() . '.tax_rate', $rate);
-    }
-
-    /**
-     * Sets the order payment gateway.
-     *
-     * Sets the following field(s):
-     *
-     * `<ROOT ATTR>.checkout_order.payment.gateway`
-     *
-     * @param string $gateway
-     * @return self
-     */
-    public function setPaymentGateway(string $gateway): self
-    {
-        $this->validateDataValue($gateway, [self::BRAINTREE], __METHOD__);
-        return $this->setData($this->getEventDataRootAttribute() . '.payment.gateway', $gateway);
-    }
-
-    /**
-     * Sets the order payment gateway transaction reference.
-     *
-     * Sets the following field(s):
-     *
-     * `<ROOT ATTR>.checkout_order.payment.gateway_transaction_reference`
-     *
-     * @param string $ref
-     * @return self
-     */
-    public function setPaymentGatewayTransactionReference(string $ref): self
-    {
-        return $this->setData($this->getEventDataRootAttribute() . '.payment.gateway_transaction_reference', $ref);
-    }
-
-    /**
-     * Sets the payment instrument type.
-     *
-     * One of `creditcard` or `paypal_account`
-     *
-     * @param string $type
-     * @return self
-     */
-    public function setPaymentInstrumentType(string $type): self
-    {
-        $this->validateDataValue($type, [self::CREDITCARD, self::PAYPAL_ACCOUNT], __METHOD__);
-        return $this->setData($this->getEventDataRootAttribute() . '.payment.payment_instrument.type', $type);
-    }
-
-    /**
-     * A human readable name for the payment instrument.
-     *
-     * Typically contains a portion of a credit card number for credit card payment instruments,
-     * or an email address for PayPal accounts.
-     *
-     * @param string $name
-     * @return self
-     */
-    public function setPaymentInstrumentName(string $name): self
-    {
-        return $this->setData($this->getEventDataRootAttribute() . '.payment.payment_instrument.name', $name);
-    }
-
-    /**
-     * Sets the payment instrument transaction reference.
-     *
-     * This is an addition payment reference specific to the payment intstrument.
-     *
-     * @param string $ref
-     * @return self
-     */
-    public function setPaymentInstrumentTransactionReference(string $ref): self
-    {
-        return $this->setData(
-            $this->getEventDataRootAttribute() . '.payment.payment_instrument.transaction_reference',
-            $ref
-        );
     }
 
     /**
