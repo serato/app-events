@@ -59,38 +59,22 @@ abstract class AbstractDataContainer
      */
     protected function setData(string $path, $item)
     {
-        $multiItem = false;
-        if (is_array($item)) {
-            foreach (array_keys($item) as $k) {
-                if (is_string($k)) {
-                    $multiItem = true;
-                    continue;
-                }
-            }
-        }
-        $pathArray = explode('.', $path);
-        $this->set($pathArray, $this->data, $item);
-        if ($multiItem) {
-            foreach ($item as $k => $v) {
-                $this->set(array_merge($pathArray, [$k]), $this->data, $v);
-            }
-        }
+        $this->data = $this->mergeData(explode('.', $path), $this->data, $item);
         return $this;
     }
 
-    private function set(array $path, &$data, $item): void
+    private function mergeData(array $path, array &$array, $item): array
     {
+        $k = array_shift($path);
         if (count($path) > 0) {
-            $k = array_shift($path);
-            if (count($path) === 0) {
-                $data[$k] = $item;
-            } else {
-                if (!isset($data[$k]) || !is_array($data[$k])) {
-                    $data[$k] = [];
-                }
-                $this->set($path, $data[$k], $item);
+            if (!isset($array[$k]) || !is_array($array[$k])) {
+                $array[$k] = [];
             }
+            $array[$k] = $this->mergeData($path, $array[$k], $item);
+        } else {
+            $array[$k] = $item;
         }
+        return $array;
     }
 
     /**
