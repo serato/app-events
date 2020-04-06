@@ -13,6 +13,7 @@ use Serato\AppEvents\Exception\InvalidDataValueException;
  * Sets the following fields:
  *
  * `event.kind`
+ * `labels.application`
  */
 abstract class AbstractEventDataContainer extends AbstractDataContainer implements SendableEventInterface
 {

@@ -15,7 +15,6 @@ use Serato\AppEvents\EventTarget\AbstractEventTarget;
  *
  * Sets the following fields:
  *
- * `labels.application`
  * `labels.env`
  * `client.user.id`
  * `http.request.referrer`
