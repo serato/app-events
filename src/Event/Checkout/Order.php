@@ -33,7 +33,7 @@ use DateTime;
  * `<ROOT ATTR>.user.billing_address.country_iso_code`
  * `<ROOT ATTR>.tax_rate`
  *
- * Additionally, the `CheckoutOrder::setOrderItems` method takes an array of
+ * The `CheckoutOrder::setOrderItems` method takes an array of
  * `\Serato\AppEvents\Event\Checkout\OrderItem` objects and copies their data to:
  *
  * `<ROOT ATTR>.items`
@@ -44,6 +44,11 @@ use DateTime;
  * `<ROOT ATTR>.amounts.discounts`
  * `<ROOT ATTR>.amounts.tax`
  * `<ROOT ATTR>.amounts.total`
+ *
+ * The `Checkout::setOrderInvoices` method takes an array of
+ * `\Serato\AppEvents\Event\Checkout\OrderInvoice` objects and copies their data to:
+ *
+ * `<ROOT ATTR>.invoices`
  */
 class Order extends AbstractTimeSeriesCheckoutEvent
 {
