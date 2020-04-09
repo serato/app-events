@@ -71,7 +71,7 @@ class OrderInvoice extends AbstractTimeSeriesCheckoutEvent
     {
         return $this
             ->setEventId($id)
-            ->setEventRootAttributeData('id', $id);
+            ->setAppEventRootAttributeData('id', $id);
     }
 
     /**
@@ -86,7 +86,7 @@ class OrderInvoice extends AbstractTimeSeriesCheckoutEvent
      */
     public function setNumber(string $number): self
     {
-        return $this->setEventRootAttributeData('number', $number);
+        return $this->setAppEventRootAttributeData('number', $number);
     }
 
     /**
@@ -102,7 +102,7 @@ class OrderInvoice extends AbstractTimeSeriesCheckoutEvent
     public function setDebtorCode(string $code): self
     {
         $this->validateDataValue($code, [self::WEBC001, self::WEBC003, self::WEBC004], __METHOD__);
-        return $this->setEventRootAttributeData('debtor_code', $code);
+        return $this->setAppEventRootAttributeData('debtor_code', $code);
     }
 
     /**
@@ -118,7 +118,7 @@ class OrderInvoice extends AbstractTimeSeriesCheckoutEvent
     public function setPaymentGateway(string $gateway): self
     {
         $this->validateDataValue($gateway, [self::BRAINTREE], __METHOD__);
-        return $this->setEventRootAttributeData('payment.gateway', $gateway);
+        return $this->setAppEventRootAttributeData('payment.gateway', $gateway);
     }
 
     /**
@@ -133,7 +133,7 @@ class OrderInvoice extends AbstractTimeSeriesCheckoutEvent
      */
     public function setPaymentGatewayTransactionReference(string $ref): self
     {
-        return $this->setEventRootAttributeData('payment.gateway_transaction_reference', $ref);
+        return $this->setAppEventRootAttributeData('payment.gateway_transaction_reference', $ref);
     }
 
     /**
@@ -151,7 +151,7 @@ class OrderInvoice extends AbstractTimeSeriesCheckoutEvent
     public function setPaymentInstrumentType(string $type): self
     {
         $this->validateDataValue($type, [self::CREDITCARD, self::PAYPAL_ACCOUNT], __METHOD__);
-        return $this->setEventRootAttributeData('payment.payment_instrument.type', $type);
+        return $this->setAppEventRootAttributeData('payment.payment_instrument.type', $type);
     }
 
     /**
@@ -169,7 +169,7 @@ class OrderInvoice extends AbstractTimeSeriesCheckoutEvent
      */
     public function setPaymentInstrumentName(string $name): self
     {
-        return $this->setEventRootAttributeData('payment.payment_instrument.name', $name);
+        return $this->setAppEventRootAttributeData('payment.payment_instrument.name', $name);
     }
 
     /**
@@ -186,7 +186,7 @@ class OrderInvoice extends AbstractTimeSeriesCheckoutEvent
      */
     public function setPaymentInstrumentTransactionReference(string $ref): self
     {
-        return $this->setEventRootAttributeData('payment.payment_instrument.transaction_reference', $ref);
+        return $this->setAppEventRootAttributeData('payment.payment_instrument.transaction_reference', $ref);
     }
 
     /**
@@ -247,10 +247,10 @@ class OrderInvoice extends AbstractTimeSeriesCheckoutEvent
         }
 
         return $this
-            ->setEventRootAttributeData('items', $data)
-            ->setEventRootAttributeData('amounts.base', $base)
-            ->setEventRootAttributeData('amounts.discounts', $discounts)
-            ->setEventRootAttributeData('amounts.tax', $tax)
-            ->setEventRootAttributeData('amounts.total', $total);
+            ->setAppEventRootAttributeData('items', $data)
+            ->setAppEventRootAttributeData('amounts.base', $base)
+            ->setAppEventRootAttributeData('amounts.discounts', $discounts)
+            ->setAppEventRootAttributeData('amounts.tax', $tax)
+            ->setAppEventRootAttributeData('amounts.total', $total);
     }
 }
