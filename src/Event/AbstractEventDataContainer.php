@@ -17,6 +17,9 @@ use Serato\AppEvents\Exception\InvalidDataValueException;
  */
 abstract class AbstractEventDataContainer extends AbstractDataContainer implements SendableEventInterface
 {
+    # The path to the root element that contains Serato-specific event data
+    private const ROOT_EVENT_ATTR = 'serato.event_data';
+
     public function __construct()
     {
         $this->setData('event.kind', 'event');
@@ -69,5 +72,28 @@ abstract class AbstractEventDataContainer extends AbstractDataContainer implemen
     public function getAppName(): ?string
     {
         return $this->getData('labels.application') === null ? null : (string)$this->getData('labels.application');
+    }
+
+    /**
+     * Sets data under the root event attribute
+     *
+     * @param string $path
+     * @param mixed $item
+     * @return mixed
+     */
+    protected function setAppEventRootAttributeData(string $path, $item)
+    {
+        return $this->setData(self::ROOT_EVENT_ATTR . '.' . $path, $item);
+    }
+
+    /**
+     * Returns data for a specified path under the root event attribute
+     *
+     * @param null|string $path
+     * @return null|mixed
+     */
+    public function getAppEventRootData(?string $path = null)
+    {
+        return $this->getData(self::ROOT_EVENT_ATTR . ($path === null ? '' : '.' . $path));
     }
 }
