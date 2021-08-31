@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Serato\AppEvents\Test\Event\Checkout;
@@ -15,7 +16,7 @@ class OrderInvoiceTest extends AbstractTestCase
         $invoiceId = '123';
         $eventStart = new DateTime('2020-01-01T05:30:30+00:00');
 
-        $orderItem = new OrderItem;
+        $orderItem = new OrderItem();
         $orderItem
             ->setOrderItemId("123")
             ->setSkuId("456")
@@ -31,7 +32,7 @@ class OrderInvoiceTest extends AbstractTestCase
             ->setAmountsTax(0)
             ->setAmountsTotal(20);
 
-        $event = new OrderInvoice;
+        $event = new OrderInvoice();
         $event
             ->setId($invoiceId)
             ->setNumber('InvoiceId-123')
@@ -57,7 +58,7 @@ class OrderInvoiceTest extends AbstractTestCase
      */
     public function testInvalidPaymentGateway(): void
     {
-        $event = new OrderInvoice;
+        $event = new OrderInvoice();
         $event->setPaymentGateway('DEFO-INVALID');
     }
 
@@ -66,7 +67,7 @@ class OrderInvoiceTest extends AbstractTestCase
      */
     public function testInvalidPaymentInstrumentType(): void
     {
-        $event = new OrderInvoice;
+        $event = new OrderInvoice();
         $event->setPaymentInstrumentType('DEFO-INVALID');
     }
 
@@ -75,7 +76,7 @@ class OrderInvoiceTest extends AbstractTestCase
      */
     public function testInvaidSetInvoiceItems(): void
     {
-        $event = new OrderInvoice;
+        $event = new OrderInvoice();
         $event->setInvoiceItems([1]);
     }
 
@@ -84,7 +85,7 @@ class OrderInvoiceTest extends AbstractTestCase
      */
     public function testInvalidDebtorCode(): void
     {
-        $event = new OrderInvoice;
+        $event = new OrderInvoice();
         $event->setDebtorCode('DEFO-INVALID');
     }
 }

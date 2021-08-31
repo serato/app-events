@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Serato\AppEvents\Event;
@@ -34,7 +35,7 @@ abstract class AbstractTimeSeriesEvent extends AbstractEventDataContainer
     public function __construct()
     {
         parent::__construct();
-        $this->setEventStart(new DateTime);
+        $this->setEventStart(new DateTime());
         $this->setEventAction([$this->getEventActionCategory(), $this->getEventActionName()]);
     }
 
