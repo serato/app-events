@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Serato\AppEvents\Test;
@@ -56,7 +57,7 @@ class HostMachineUidTest extends AbstractTestCase
             ['P57TL8GGQI69'],                                                       # Incorrect number of segments
             ['P57TL8GGQI69~P57TL8GGQI69'],                                          # Duplicate system ID (1)
             ['P57TL8GGQI69~P57TL8GGQI69~PG796169S564N489'],                         # Duplicate system ID (2)
-            
+
             ['SID='],
             ['SID=P57TL8GGQI69'],                                                    # Incorrect number of segments
             ['SID=P57TL8GGQI69~P57TL8GGQI69'],                                       # Duplicate system ID (1)
@@ -200,7 +201,7 @@ class HostMachineUidTest extends AbstractTestCase
             ['P57TL8GGQI69~GBFUL623C0UIG-QW796169S564N477', 'P57TL8GGQI69~YXFUL623C0UPM~PG796169S564N489'],
             ['P57TL8GGQI69~GBFUL623C0UIG', 'LQ7TL8GGQI69~GBFUL623C0UIG'],
             ['P57TL8GGQI69~GBFUL623C0UIG~PG796169S564N489', 'LQ7TL8GGQI69~GBFUL623C0UIG~PG796169S564N489'],
-            
+
             ['SID=P57TL8GGQI69~GBFUL623C0UIG', 'SID=P57TL8GGQI69~PG796169S564N489'],
             [
                 'SID=P57TL8GGQI69~GBFUL623C0UIG SID=P57TL8GGQI69~QW796169S564N477',

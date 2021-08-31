@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Serato\AppEvents\Test\EventTarget;
@@ -21,7 +22,7 @@ class FilebeatTest extends AbstractTestCase
 
     protected function getRedirectEvent(): Redirect
     {
-        $event  = new Redirect;
+        $event  = new Redirect();
         $event
             # AbstractTimeSeriesEvent
             ->setHttpReferrer('http://serato.com/dj')

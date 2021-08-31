@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Serato\AppEvents;
@@ -196,7 +197,8 @@ class HostMachineUid
         # This logic is NOT implemented here but could be added later if need be.
 
         // Confirm that the system IDs match
-        if (strcmp($this->getSystemId(), $hostMachineId->getSystemId()) !== 0 ||
+        if (
+            strcmp($this->getSystemId(), $hostMachineId->getSystemId()) !== 0 ||
             count(array_intersect($this->getStorageIds(), $hostMachineId->getStorageIds())) === 0
         ) {
             return false;
@@ -247,7 +249,8 @@ class HostMachineUid
 
         # Host ID cannot start with self::HOSTIDEXTENDED_SYSTEM_ID_PREFIX ("SID=") and
         # must contain at least one self::FIELD_DELIMITER character ("~")
-        if (strpos($hostId, self::HOSTIDEXTENDED_SYSTEM_ID_PREFIX) === 0 ||
+        if (
+            strpos($hostId, self::HOSTIDEXTENDED_SYSTEM_ID_PREFIX) === 0 ||
             count(explode(self::FIELD_DELIMITER, $hostId)) < 2
         ) {
             throw new InvalidHostMachineUidException(
@@ -294,7 +297,8 @@ class HostMachineUid
 
         # Host ID must start with self::HOSTIDEXTENDED_SYSTEM_ID_PREFIX ("SID=") and
         # must contain at least one self::FIELD_DELIMITER character ("~")
-        if (strpos($hostId, self::HOSTIDEXTENDED_SYSTEM_ID_PREFIX) !== 0 ||
+        if (
+            strpos($hostId, self::HOSTIDEXTENDED_SYSTEM_ID_PREFIX) !== 0 ||
             count(explode(self::FIELD_DELIMITER, $hostId)) < 2
         ) {
             throw new InvalidHostMachineUidException(

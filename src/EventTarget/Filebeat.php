@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Serato\AppEvents\EventTarget;
@@ -24,7 +25,7 @@ class Filebeat extends AbstractEventTarget
         parent::__construct($appName);
 
         $stream = new StreamHandler($logFilePath, Logger::INFO);
-        $stream->setFormatter(new JsonFormatter);
+        $stream->setFormatter(new JsonFormatter());
         $this->logger = new Logger($appName . ' Filebeat Logger');
         $this->logger->pushHandler($stream);
     }

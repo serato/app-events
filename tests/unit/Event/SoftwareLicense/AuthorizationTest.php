@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Serato\AppEvents\Test\Event\SoftwareLicense;
@@ -15,7 +16,7 @@ class AuthorizationTest extends AbstractTestCase
         $eventStart = new DateTime('2020-01-01T05:30:30+00:00');
         $eventEnd = new DateTime('2020-02-02T12:45:30+00:00');
 
-        $event  = new Authorization;
+        $event  = new Authorization();
         $event
             # AbstractTimeSeriesEvent
             ->setUserId('user-123')
@@ -25,8 +26,8 @@ class AuthorizationTest extends AbstractTestCase
             ->setEventOutcome(Authorization::SUCCESS)
             # Authorization
             ->setAuthorizationId($id)
-            ->setAuthorizationValidTo(new DateTime)
-            ->setAuthorizationCommittedAt(new DateTime)
+            ->setAuthorizationValidTo(new DateTime())
+            ->setAuthorizationCommittedAt(new DateTime())
             ->setAuthorizationResultCode(0)
             ->setAuthorizationAction(Authorization::AUTHORIZE)
             ->setAuthorizationHostMachineId('P57TL8GGQI69~GBFUL623C0UIG~PG796169S564N489')
@@ -36,7 +37,7 @@ class AuthorizationTest extends AbstractTestCase
             ->setAuthorizationHostApplicationName('dj')
             ->setAuthorizationHostApplicationVersion('1.2.3.456')
             ->setLicenseId('SDJ-4617674-0032-4310-6504')
-            ->setLicenseValidTo(new DateTime)
+            ->setLicenseValidTo(new DateTime())
             ->setLicenseTypeId('32')
             ->setLicenseTypeName('Flip Expansion Pack')
             ->setLicenseTypeOptions(Authorization::PERMANENT)
@@ -44,7 +45,7 @@ class AuthorizationTest extends AbstractTestCase
             ->setLicenseTypeRlmSchemaVersion('1.0')
             ->setLicenseUserId('user-456')
             ->setLicenseProductId('SDJ-4617674-0085-1834-4607')
-            ->setLicenseProductCreatedAt(new DateTime)
+            ->setLicenseProductCreatedAt(new DateTime())
             ->setLicenseProductTypeId('85')
             ->setLicenseProductTypeName('Serato Flip Expansion Pack [download]')
         ;
@@ -60,7 +61,7 @@ class AuthorizationTest extends AbstractTestCase
      */
     public function testInvalidAuthorizationAction(): void
     {
-        $event = new Authorization;
+        $event = new Authorization();
         $event->setAuthorizationAction('THIS-IS-NOT-LEGIT');
     }
 
@@ -69,7 +70,7 @@ class AuthorizationTest extends AbstractTestCase
      */
     public function testInvalidLicenseTypeOptions(): void
     {
-        $event = new Authorization;
+        $event = new Authorization();
         $event->setLicenseTypeOptions('THIS-IS-NOT-LEGIT');
     }
 
@@ -78,7 +79,7 @@ class AuthorizationTest extends AbstractTestCase
      */
     public function testInvalidEventOutcome(): void
     {
-        $event = new Authorization;
+        $event = new Authorization();
         $event->setEventOutcome('THIS-IS-NOT-LEGIT');
     }
 
@@ -92,7 +93,7 @@ class AuthorizationTest extends AbstractTestCase
      */
     public function testInvalidAuthorizationHostMachineId(): void
     {
-        $event = new Authorization;
+        $event = new Authorization();
         $event->setAuthorizationHostMachineId('NOT-A-HOST-ID');
         # Should only have default event data in the output
         $this->assertEquals(count($event->get()), 1);

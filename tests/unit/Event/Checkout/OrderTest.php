@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Serato\AppEvents\Test\Event\Checkout;
@@ -20,7 +21,7 @@ class OrderTest extends AbstractTestCase
 
         $orderItems = [$this->getOrderItem()];
 
-        $event = new Order;
+        $event = new Order();
 
         $event
             # AbstractTimeSeriesEvent
@@ -64,7 +65,7 @@ class OrderTest extends AbstractTestCase
      */
     public function testInvaidSetOrderItems(): void
     {
-        $event = new Order;
+        $event = new Order();
         $event->setOrderItems([1]);
     }
 
@@ -73,13 +74,13 @@ class OrderTest extends AbstractTestCase
      */
     public function testInvaidSetOrderInvoices(): void
     {
-        $event = new Order;
+        $event = new Order();
         $event->setOrderInvoices([1]);
     }
 
     protected function getOrderItem(): OrderItem
     {
-        $orderItem = new OrderItem;
+        $orderItem = new OrderItem();
         $orderItem
             ->setOrderItemId("123")
             ->setSkuId("456")
@@ -96,10 +97,10 @@ class OrderTest extends AbstractTestCase
             ->setAmountsTotal(20);
         return $orderItem;
     }
-    
+
     protected function getOrderInvoice(array $orderItems): OrderInvoice
     {
-        $inv = new OrderInvoice;
+        $inv = new OrderInvoice();
         $inv
             ->setEventId('InvoiceId-123')
             ->setId('InvoiceId-123')

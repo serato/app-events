@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Serato\AppEvents\Test\Event\SeraTo;
@@ -12,7 +13,7 @@ class RedirectTest extends AbstractTestCase
     {
         $id = 'id-123';
 
-        $event  = new Redirect;
+        $event  = new Redirect();
         $event
             # AbstractTimeSeriesEvent
             ->setHttpReferrer('http://serato.com/dj')

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Serato\AppEvents\Test\Event\Checkout;
@@ -18,7 +19,7 @@ class OrderItemTest extends AbstractTestCase
         $amountsTax = 2.25;
         $amountsTotal = 12.25;
 
-        $promo = new OrderItemPromotion;
+        $promo = new OrderItemPromotion();
         $promo
             ->setPromotionId('promo-id')
             ->setName('My Promo')
@@ -26,7 +27,7 @@ class OrderItemTest extends AbstractTestCase
             ->setDiscountPercentage(25.0)
             ->setDiscountFixedAmount(0.00);
 
-        $event = new OrderItem;
+        $event = new OrderItem();
 
         $event
             ->setOrderItemId("123")
@@ -60,7 +61,7 @@ class OrderItemTest extends AbstractTestCase
      */
     public function testInvaidSetPromotions(): void
     {
-        $event = new OrderItem;
+        $event = new OrderItem();
         $event->setPromotions([1]);
     }
 
@@ -69,7 +70,7 @@ class OrderItemTest extends AbstractTestCase
      */
     public function testInvaidSetSkuLicenseTerm(): void
     {
-        $event = new OrderItem;
+        $event = new OrderItem();
         $event->setSkuLicenseTerm('WorksForAWeek');
     }
 
@@ -78,7 +79,7 @@ class OrderItemTest extends AbstractTestCase
      */
     public function testInvaidSetTaxCode(): void
     {
-        $event = new OrderItem;
+        $event = new OrderItem();
         $event->setTaxCode('HeapsOfTax');
     }
 }

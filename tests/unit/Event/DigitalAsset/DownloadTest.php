@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Serato\AppEvents\Test\Event\DigitalAsset;
@@ -18,7 +19,7 @@ class DownloadTest extends AbstractTestCase
         $versionRelease = '1.2.3';
         $versionBuild = '456';
 
-        $event  = new Download;
+        $event  = new Download();
         $event
             # AbstractTimeSeriesEvent
             ->setUserId('user-123')
@@ -59,7 +60,7 @@ class DownloadTest extends AbstractTestCase
      */
     public function testInvalidBuildResourceInfoRelaseType(): void
     {
-        $event = new Download;
+        $event = new Download();
         $event->buildResourceInfo(
             'dj',
             'win-installer-no-corepack',

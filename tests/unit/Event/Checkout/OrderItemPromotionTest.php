@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Serato\AppEvents\Test\Event\Checkout;
@@ -10,7 +11,7 @@ class OrderItemPromotionTest extends AbstractTestCase
 {
     public function testSmokeTest(): void
     {
-        $event = new OrderItemPromotion;
+        $event = new OrderItemPromotion();
 
         $event
             ->setPromotionId('promo-id')
